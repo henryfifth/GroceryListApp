@@ -24,7 +24,9 @@ export default class List extends Component {
   }
 
   addItem(){
-    this.itemList.push(this.state.input);
+    if(this.state.input !== ""){
+      this.itemList.push(this.state.input);
+    }
     this.setState({
       input: ""
     })
