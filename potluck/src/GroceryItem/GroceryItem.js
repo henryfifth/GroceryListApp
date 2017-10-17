@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { ListGroup, ListGroupItem } from 'reactstrap';
+import './GroceryItem.css';
 
 export default class GroceryItem extends Component {
   constructor(){
@@ -8,9 +10,9 @@ export default class GroceryItem extends Component {
   render(){
     console.log(this.props);
   return(                                                                                   
-    <div>
+    <ListGroupItem>
        {this.props.itemList}
-    </div>
+    </ListGroupItem>
   )
   }
 }

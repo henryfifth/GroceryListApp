@@ -3,6 +3,7 @@ import { Button, Input } from 'reactstrap';
 import ListItem from '../ListItem/ListItem';
 import GroceryList from '../GroceryList/GroceryList';
 import Navvy from '../Nav/Nav';
+import GroceryInputs from '../GroceryInputs/GroceryInputs';
 
 
 export default class List extends Component {
@@ -33,9 +34,8 @@ export default class List extends Component {
   return(                                                                                   
     <div>
       <Navvy />
-      <GroceryList itemList={this.itemList} addItem={this.addItem}/>
-      <Input value={this.state.input} onChange={this.updateInput} placeholder="New item..." />
-      <Button color="primary" onClick={this.addItem}>Add Item</Button>
+      <GroceryList itemList={this.itemList} addItem={this.addItem} class='main'/>
+      <GroceryInputs input={this.state.input} updateInput={this.updateInput} addItem={this.addItem}/>
     </div>
   )
   }
