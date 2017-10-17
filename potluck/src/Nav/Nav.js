@@ -23,7 +23,7 @@ toggle() {
 
   return(                                                                                   
     <div id="navvy">
-        <Navbar color="warning" light expand="md">
+        <Navbar color="success" light expand="md">
           <NavbarBrand href="/">Potluck</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>

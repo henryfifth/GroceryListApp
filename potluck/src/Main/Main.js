@@ -6,20 +6,16 @@ import Navvy from '../Nav/Nav';
 import GroceryInputs from '../GroceryInputs/GroceryInputs';
 import './Main.css';
 
-
-export default class List extends Component {
+export default class Main extends Component {
   constructor(){
-  super()
-  this.getList = this.getList.bind(this);
-  this.state = {
-    initialized: false
-  }
-  this.itemList = []
+    super()
+    this.getList = this.getList.bind(this);
+    this.state = {
+      initialized: false
+    }
 }
 
-
 getList(){
-  console.log('here yet?')
   if (this.state.initialized) {
     this.setState({
       initialized: false
@@ -43,7 +39,7 @@ componentDidMount(){
   return(                                                                                   
     <div id='main'>
       <Navvy />
-      <GroceryInputs class='grocery-inputs' state={this.state} items={this.items} itemList={this.itemList} input={this.state.input} updateInput={this.updateInput}  sendData={this.sendData} />
+      <GroceryInputs class='grocery-inputs' state={this.state} items={this.items} input={this.state.input} updateInput={this.updateInput} />
     </div>
   )} else {
     return (
