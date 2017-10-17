@@ -1,16 +1,16 @@
-#main-button{
+.main-button{
   margin-left: 30%;
   margin-right: 30%;
   width: 40%;
 }
 
-#main-input{
+.main-input{
   margin-left: 30%;
   margin-right: 30%;
   width: 40%;
 }
 
-#main{
+.main{
   background: url('../main-background.jpg'); 
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -22,7 +22,7 @@
   background-attachment: fixed;
 }
 
-#grocery-inputs{
+.grocery-inputs{
   display: flex;
   flex-direction: column;
 }

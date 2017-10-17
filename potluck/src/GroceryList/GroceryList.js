@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
-import { Row, Col, ListGroup, ListGroupItem } from 'reactstrap';
+import { ListGroup } from 'reactstrap';
 import GroceryItem from '../GroceryItem/GroceryItem';
 import './GroceryList.css';
 
 export default class GroceryList extends Component {
-  constructor(){
-  super()
-}
-
 
   render(){
     console.log(this.props);

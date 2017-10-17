@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import GroceryList from '../GroceryList/GroceryList';
-import { Button, Input, InputGroup, InputGroupButton } from 'reactstrap';
+import { Input, InputGroup, InputGroupButton } from 'reactstrap';
 import './GroceryInputs.css';
 
 export default class List extends Component {
@@ -48,6 +48,7 @@ deleteItem(id){
   return fetch('/items/' + id, {
     method: 'DELETE'
   }).then((res)=>{
+    console.log(res);
     return res.json();
    }).then((data)=>{
      this.setState({
@@ -72,12 +73,12 @@ _handleKeyPress(e){
   render(){
     const isEnabled = this.state.input.length > 0;
   return(                                                                                   
-    <div class='grocery-inputs'>
-    <InputGroup class='mufu'>
+    <div className='grocery-inputs'>
+    <InputGroup className='mufu'>
       <Input value={this.state.input} onChange={this.updateInput} onKeyPress={this._handleKeyPress} placeholder="New item..."/>
       <InputGroupButton disabled={!isEnabled} color="primary" onClick={this.createList} >Add Item</InputGroupButton>
     </InputGroup>
-    <GroceryList class='grocery-inputs' deleteItem={this.deleteItem} items={this.state.items} class='main'/>
+    <GroceryList className='grocery-inputs' deleteItem={this.deleteItem} items={this.state.items} class='main'/>
     </div>
   )}
     }

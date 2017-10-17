@@ -4,7 +4,6 @@ import Main from '../Main/Main';
 import {
   BrowserRouter as Router,
   Route,
-  Link,
 } from 'react-router-dom';
 
 class App extends Component {

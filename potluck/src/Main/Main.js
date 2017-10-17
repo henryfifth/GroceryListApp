@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import { Row, Button, Input } from 'reactstrap';
-import ListItem from '../ListItem/ListItem';
-import GroceryList from '../GroceryList/GroceryList';
 import Navvy from '../Nav/Nav';
 import GroceryInputs from '../GroceryInputs/GroceryInputs';
 import './Main.css';
@@ -37,15 +34,15 @@ componentDidMount(){
   render(){
     if (this.state.initialized) {
   return(                                                                                   
-    <div id='main'>
+    <div className='main'>
       <Navvy />
-      <GroceryInputs class='grocery-inputs' state={this.state} items={this.items} input={this.state.input} updateInput={this.updateInput} />
+      <GroceryInputs className='grocery-inputs' state={this.state} items={this.items} input={this.state.input} updateInput={this.updateInput} />
     </div>
   )} else {
     return (
       <h2>
         Loading...
       </h2>
-    )};
+    )}
   }
 }

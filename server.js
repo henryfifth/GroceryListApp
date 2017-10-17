@@ -43,7 +43,6 @@ app.post('/items', function (req, res, next) {
           res.json(item);
         }
       });
-      //res.json(itemReturned._id);
     }
   });
 });
@@ -59,11 +58,21 @@ app.get('/items', function (req, res, next) {
   });
 })
 
-app.delete('/items', function (req, res, next) {
-  Item.find(function (err, item){
+app.delete('/items/:id', function (req, res, next) {
+  Item.remove({_id: req.params.id}, function (err, item){
     if (err) {
       console.log(err);
-    }
+      next(err);
+    } else {
+      Item.find(function (err, item) {
+        if (err) {
+          console.log(err);
+          next(err);
+        } else {
+          res.json(item);
+        }
+      });
+    }  
   })
 })
 
