@@ -8,10 +8,9 @@ export default class GroceryItem extends Component {
 }
 
   render(){
-    console.log(this.props);
   return(                                                                                   
     <ListGroupItem action>
-       {this.props.itemList}
+       {this.props.items.name}
     </ListGroupItem>
   )
   }
