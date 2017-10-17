@@ -1,36 +1,46 @@
 import React, { Component } from 'react';
-import { Button, Input } from 'reactstrap';
+import { Row, Button, Input } from 'reactstrap';
 import ListItem from '../ListItem/ListItem';
 import GroceryList from '../GroceryList/GroceryList';
 import Navvy from '../Nav/Nav';
+import GroceryInputs from '../GroceryInputs/GroceryInputs';
+import './Main.css';
 
 
 export default class List extends Component {
   constructor(){
   super()
-  this.updateInput = this.updateInput.bind(this);
-  this.addItem = this.addItem.bind(this);
-  this._handleKeyPress = this._handleKeyPress.bind(this);
+
+  this.getList = this.getList.bind(this);
+
   this.state = {
-    input: ""
+    initialized: false
   }
   this.itemList = []
 }
 
-  updateInput(i){
-    this.setState({
-      input: i.target.value
-    })
-  }
 
-  addItem(){
-    if(this.state.input !== ""){
-      this.itemList.push(this.state.input);
-    }
+
+getList(){
+  console.log('here yet?')
+  if (this.state.initialized) {
+
     this.setState({
-      input: ""
-    })
+      initialized: false
+    });
   }
+  fetch('/items').then((webObj)=>{
+    return webObj.json();
+  }).then((data)=>{
+    this.items = data;
+    this.setState({
+      initialized: true,
+    });
+  })
+}
+componentDidMount(){
+  this.getList();
+}
 
   _handleKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -39,13 +49,19 @@ export default class List extends Component {
   }
 
   render(){
+    if (this.state.initialized) {
   return(                                                                                   
-    <div>
+    <div id='main'>
       <Navvy />
-      <GroceryList itemList={this.itemList} addItem={this.addItem}/>
-      <Input type="text" onKeyPress={this._handleKeyPress} value={this.state.input} onChange={this.updateInput} placeholder="New item..." />
-      <Button color="primary" onClick={this.addItem}>Add Item</Button>
+
+      <GroceryInputs class='grocery-inputs' state={this.state} items={this.items} itemList={this.itemList} input={this.state.input} updateInput={this.updateInput}  sendData={this.sendData} />
+
     </div>
-  )
+  )} else {
+    return (
+      <h2>
+        Loading...
+      </h2>
+    )};
   }
 }

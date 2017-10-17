@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
-
+import './Nav.css'
 
 
 export default class Navvy extends Component {
@@ -22,8 +22,8 @@ toggle() {
     
 
   return(                                                                                   
-    <div>
-        <Navbar color="faded" light expand="md">
+    <div id="navvy">
+        <Navbar color="warning" light expand="md">
           <NavbarBrand href="/">Potluck</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>

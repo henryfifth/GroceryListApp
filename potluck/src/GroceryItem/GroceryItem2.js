@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { ListGroup, ListGroupItem } from 'reactstrap';
-import './GroceryItem.css';
 
-export default class GroceryItem extends Component {
+export default class GroceryItem2 extends Component {
   constructor(){
   super()
 }
 
   render(){
+    console.log(this.props);
   return(                                                                                   
     <ListGroupItem action>
-       {this.props.items.name}
+       {this.props.items}
     </ListGroupItem>
   )
   }
