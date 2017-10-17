@@ -15,7 +15,7 @@ class App extends Component {
            <div>
              {/* <Route path='/Login' render={() => <Login/>}/>
              <Route path='/Signup' render={()=> <SignUp/>}/> */}
-             <Route path='/Main' render={()=> <Main/>}/>
+             <Route path='' render={()=> <Main/>}/>
           </div>
         </Router>
       
