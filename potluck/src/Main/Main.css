@@ -9,3 +9,18 @@
   margin-right: 30%;
   width: 40%;
 }
+
+#main{
+  background: url('../main-background.jpg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  min-height: 640px;
+  min-width: 1024px;
+}
+
+#grocery-inputs{
+  display: flex;
+  flex-direction: column;
+}

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Button, Input } from 'reactstrap';
+import { Row, Button, Input } from 'reactstrap';
 import ListItem from '../ListItem/ListItem';
 import GroceryList from '../GroceryList/GroceryList';
 import Navvy from '../Nav/Nav';
 import GroceryInputs from '../GroceryInputs/GroceryInputs';
+import './Main.css';
 
 
 export default class List extends Component {
@@ -32,10 +33,9 @@ export default class List extends Component {
 
   render(){
   return(                                                                                   
-    <div>
+    <div id='main'>
       <Navvy />
-      <GroceryList itemList={this.itemList} addItem={this.addItem} class='main'/>
-      <GroceryInputs input={this.state.input} updateInput={this.updateInput} addItem={this.addItem}/>
+      <GroceryInputs class='grocery-inputs' itemList={this.itemList} input={this.state.input} updateInput={this.updateInput} addItem={this.addItem}/>
     </div>
   )
   }
