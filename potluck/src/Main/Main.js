@@ -10,6 +10,7 @@ export default class List extends Component {
   super()
   this.updateInput = this.updateInput.bind(this);
   this.addItem = this.addItem.bind(this);
+  this._handleKeyPress = this._handleKeyPress.bind(this);
   this.state = {
     input: ""
   }
@@ -29,12 +30,18 @@ export default class List extends Component {
     })
   }
 
+  _handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      this.addItem();
+    }
+  }
+
   render(){
   return(                                                                                   
     <div>
       <Navvy />
       <GroceryList itemList={this.itemList} addItem={this.addItem}/>
-      <Input value={this.state.input} onChange={this.updateInput} placeholder="New item..." />
+      <Input type="text" onKeyPress={this._handleKeyPress} value={this.state.input} onChange={this.updateInput} placeholder="New item..." />
       <Button color="primary" onClick={this.addItem}>Add Item</Button>
     </div>
   )
