@@ -35,7 +35,6 @@ componentDidMount(){
     if (this.state.initialized) {
   return(                                                                                   
     <div className='main'>
-      <Navvy />
       <GroceryInputs className='grocery-inputs' state={this.state} items={this.items} input={this.state.input} updateInput={this.updateInput} />
     </div>
   )} else {

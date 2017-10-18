@@ -5,34 +5,33 @@ import './Nav.css'
 
 export default class Navvy extends Component {
   constructor(){
-  super()
-  this.toggle = this.toggle.bind(this);
-  this.state = {
-    isOpen: false
-  };
-}
-toggle() {
-  this.setState({
-    isOpen: !this.state.isOpen
-  });
-}
-
-
+    super()
+    this.toggle = this.toggle.bind(this);
+    this.state = {
+      isOpen: false
+    };
+  }
+  toggle() {
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
+  }
   render(){
-    
-
-  return(                                                                                   
+    return(                                                                                   
     <div id="navvy">
         <Navbar color="success" light expand="md">
-          <NavbarBrand href="/">Potluck</NavbarBrand>
+          <NavbarBrand href="/main">Potluck</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink>SignUp</NavLink>
+                <NavLink href="/signUp">SignUp</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink >Login</NavLink>
+                <NavLink href="/login" >Login</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/house" >Create House</NavLink>
               </NavItem>
             </Nav>
           </Collapse>
