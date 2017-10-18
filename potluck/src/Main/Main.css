@@ -1,26 +1,28 @@
-#main-button{
+.main-button{
   margin-left: 30%;
   margin-right: 30%;
   width: 40%;
 }
 
-#main-input{
+.main-input{
   margin-left: 30%;
   margin-right: 30%;
   width: 40%;
 }
 
-#main{
-  background: url('../main-background.jpg') no-repeat center center fixed; 
+.main{
+  background: url('../main-background.jpg'); 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  min-height: 640px;
-  min-width: 1024px;
+  height: 100vh;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
-#grocery-inputs{
+.grocery-inputs{
   display: flex;
   flex-direction: column;
 }

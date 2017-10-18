@@ -16,5 +16,12 @@
   "bugs": {
     "url": "https://github.com/bbalconi/Potluck/issues"
   },
-  "homepage": "https://github.com/bbalconi/Potluck#readme"
+  "homepage": "https://github.com/bbalconi/Potluck#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "mongodb-uri": "^0.9.7",
+    "mongoose": "^4.12.3",
+    "node-fetch": "^1.7.3"
+  }
 }

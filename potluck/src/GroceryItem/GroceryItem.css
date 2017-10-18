@@ -1,5 +1,8 @@
 .grocery-item{
-  margin-left: 30%;
-  margin-right: 30%;
-  width: 40%;
+  background-color: salmon;
+}
+
+.delete{
+  align-content: right;
+  height: 10px;
 }
