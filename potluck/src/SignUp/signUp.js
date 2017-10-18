@@ -12,6 +12,7 @@ class SignUp extends Component{
     this.inputemailChange = this.inputemailChange.bind(this);
     this.inputpasswordChange = this.inputpasswordChange.bind(this);
     this.handleSignup = this.handleSignup.bind(this);
+    this.confirmPassword = this.confirmPassword.bind(this);
     this.submitSignup = this.submitSignup.bind(this);
     this._handleKeyPress = this._handleKeyPress.bind(this);
     this.state = {
@@ -19,12 +20,12 @@ class SignUp extends Component{
       lastName: '',
       email: '',
       password: '',
+      confirmPassword: '',
       message: ''
     }
   }
   submitSignup(signupObj) {
     var url = '/signup';
-   
     fetch(url, {
         method: "POST",
         headers:{"Content-Type":"application/json"}, 
@@ -52,13 +53,16 @@ class SignUp extends Component{
     }); 
   }
   handleSignup() {
+    if (this.state.password === this.state.confirmPassword) {      
     this.submitSignup({
       firstName: this.state.firstName,      
       lastName: this.state.lastName,
       email: this.state.email,
       password: this.state.password
-    });
-  }
+    })
+  } else {
+    alert ('Passwords Do Not Match')
+  }}
   inputfirstNameChange(event) {
     this.setState({firstName: event.target.value});
   }
@@ -71,9 +75,13 @@ class SignUp extends Component{
   inputpasswordChange(event) {
     this.setState({password: event.target.value});
   }
+  confirmPassword(event) {
+    this.setState({confirmPassword: event.target.value});
+  }
+
   _handleKeyPress(e){
     if(e.key === "Enter"){
-      this.submitSignup();
+      this.handleSignup();
     }
   }
   render(){ 
@@ -97,6 +105,10 @@ class SignUp extends Component{
         <FormGroup>
           <Label for="password">Password</Label>{' '}
           <Input type="password" onChange={this.inputpasswordChange} value={this.state.password} name="password" id="password"  placeholder="abc123"  onKeyPress={this._handleKeyPress}/>
+        </FormGroup>
+        <FormGroup>
+          <Label for="password">Confirm Password</Label>{' '}
+          <Input type="password" onChange={this.confirmPassword} value={this.state.confirmPassword} name="password" id="password"  placeholder="abc123"  onKeyPress={this._handleKeyPress}/>
         </FormGroup>
         {' '}
          <Button onClick={this.handleSignup}>Submit</Button> 

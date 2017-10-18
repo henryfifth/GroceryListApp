@@ -1,21 +1,26 @@
 import React, { Component } from 'react';
-import { ListGroup } from 'reactstrap';
+import { Table, ListGroup } from 'reactstrap';
 import GroceryItem from '../GroceryItem/GroceryItem';
 import './GroceryList.css';
 
 export default class GroceryList extends Component {
-
+  constructor(){
+    super()
+    
+  }
+ 
   render(){
-    console.log(this.props);
     let newList = this.props.items.map((item, i)=>{
       return <GroceryItem class='grocery-item' deleteItem={this.props.deleteItem} items={this.props.items[i]}/>
     })
-
+    console.log(newList)
   return(                                                                                   
     <div class='list-group'>
-      <ListGroup >
+      <Table >
+        <tbody >
         {newList}
-      </ListGroup>
+      </tbody>
+      </Table>
     </div>
   )
   }

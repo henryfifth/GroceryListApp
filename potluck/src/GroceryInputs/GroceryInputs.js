@@ -33,7 +33,8 @@ sendData(){
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({
-      name: this.state.input, 
+      name: this.state.input,
+      selector: 0 
     })
   }).then((res)=>{
    return res.json();

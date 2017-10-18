@@ -33,6 +33,10 @@ export default class Navvy extends Component {
               <NavItem>
                 <NavLink href="/house" >Create House</NavLink>
               </NavItem>
+              <NavItem>
+              <NavLink href="/join-house" >Join House</NavLink>
+              </NavItem>
+
             </Nav>
           </Collapse>
         </Navbar>

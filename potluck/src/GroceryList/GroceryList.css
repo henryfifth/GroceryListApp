@@ -6,3 +6,7 @@
   width: 40%;
   margin-bottom: 20%;
 }
+
+.table th, .table td {
+  border-top: 0 !important;
+}
