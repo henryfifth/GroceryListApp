@@ -14,6 +14,7 @@ export default class Main extends Component {
 
 getList(){
   if (this.state.initialized) {
+
     this.setState({
       initialized: false
     });
@@ -31,11 +32,18 @@ componentDidMount(){
   this.getList();
 }
 
+  _handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      this.addItem();
+    }
+  }
+
   render(){
     if (this.state.initialized) {
-  return(                                                                                   
+  return(
     <div className='main'>
       <GroceryInputs className='grocery-inputs' state={this.state} items={this.items} input={this.state.input} updateInput={this.updateInput} />
+
     </div>
   )} else {
     return (
