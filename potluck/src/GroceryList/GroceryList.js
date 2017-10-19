@@ -19,7 +19,7 @@ export default class GroceryList extends Component {
       <Table >
         <tbody >
         {newList}
-      </tbody>
+      </tbody>   
       </Table>
     </div>
   )
