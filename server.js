@@ -67,13 +67,20 @@ app.put('/items/:id', (req, res, next)=>{
       console.log(err);
       next(err);
     } else {
-        item.selector = req.body.selector;
+      if(item.selector === 0){
+        item.selector = 1;
+      }else{
+        item.selector = 0;
+      }
+      console.log("HERE");
+      console.log(item.selector);
+        // item.selector = req.body.selector;
         item.save((err, itemReturned)=>{
           if(err){
             console.log(err);
             next(err);
           } else {
-            res.json('item updated in db' + itemReturned);
+            res.json( itemReturned);
           }
       });
   };
