@@ -31,7 +31,7 @@ app.post('/items', function (req, res, next) {
   var item = new Item();
   item.name = req.body.name
   item.quantity = req.body.quantity;
-  item.selector = req.body.selector;
+  item.selector = false;
   item.save(function (err, itemReturned) {
     if (err) {
       console.log(err);
@@ -61,27 +61,34 @@ app.get('/items', function (req, res, next) {
   });
 })
 
-app.put('/items/:id', (req, res, next)=>{
-  Item.findByIdAndUpdate({_id: req.params.id}, "selector", (err, item)=>{
-    if(err) {
+app.put('/items/:id', (req, res, next) => {
+  Item.findByIdAndUpdate({ _id: req.params.id }, "selector", (err, item) => {
+    if (err) {
       console.log(err);
       next(err);
     } else {
-        item.selector = req.body.selector;
-        item.save((err, itemReturned)=>{
-          if(err){
-            console.log(err);
-            next(err);
-          } else {
-            res.json('item updated in db' + itemReturned);
-          }
+      item.save((err, itemReturned) => {
+        if (err) {
+          console.log(err);
+          next(err);
+        } else {
+          Item.find(function (err, item) {
+            if (err) {
+              console.log(err);
+              next(err);
+            } else {
+              res.json(item);
+            }
+          });
+        }
       });
-  };
-})});
+    };
+  })
+});
 
 
 app.delete('/items/:id', function (req, res, next) {
-  Item.remove({_id: req.params.id}, function (err, item){
+  Item.remove({ _id: req.params.id }, function (err, item) {
     if (err) {
       console.log(err);
       next(err);
@@ -94,7 +101,7 @@ app.delete('/items/:id', function (req, res, next) {
           res.json(item);
         }
       });
-    }  
+    }
   })
 })
 
@@ -103,10 +110,10 @@ app.post("/signup", (req, res, next) => {
   user.firstName = req.body.firstName;
   user.lastName = req.body.lastName;
   user.email = req.body.email;
-  user.password = req.body.password; 
+  user.password = req.body.password;
   User.findOne({
     email: user.email
-  },  (err, foundUser)=> { 
+  }, (err, foundUser) => {
     if (err) {
       res.json({
         found: false,
@@ -124,9 +131,14 @@ app.post("/signup", (req, res, next) => {
             found: true,
             message: "Success",
             success: true
-          })}})}})});
+          })
+        }
+      })
+    }
+  })
+});
 
-app.post('/login', function (req, res, next) { 
+app.post('/login', function (req, res, next) {
   var email = req.body.email;
   var password = req.body.password;
   User.findOne({
@@ -170,7 +182,7 @@ app.post("/create-house", (req, res, next) => {
   house.password = req.body.password;
   User.findOne({
     houseName: house.houseName
-  },  (err, foundHouse)=> { 
+  }, (err, foundHouse) => {
     if (err) {
       res.json({
         found: false,
@@ -195,27 +207,28 @@ app.post("/create-house", (req, res, next) => {
   });
 });
 
-app.put('/join', (req, res, next)=>{
-  House.findOne({"houseName": req.body.joinHouse}, "password users", (err, house)=>{
-    if(err) {
+app.put('/join', (req, res, next) => {
+  House.findOne({ "houseName": req.body.joinHouse }, "password users", (err, house) => {
+    if (err) {
       console.log(err);
       next(err);
     } else {
       if (req.body.password === house.password) {
         house.users.push(req.body.user);
-        house.save((err, userReturned)=>{
-          if(err){
+        house.save((err, userReturned) => {
+          if (err) {
             console.log(err);
             next(err);
           } else {
             res.json('user updated in db' + userReturned.users);
           }
-      });
-    } else {
-      res.json('No password match found in database')
-    }
-  };
-})});
+        });
+      } else {
+        res.json('No password match found in database')
+      }
+    };
+  })
+});
 
 
 
