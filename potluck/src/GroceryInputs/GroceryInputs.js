@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import GroceryList from '../GroceryList/GroceryList';
 import { Input, InputGroup, InputGroupButton } from 'reactstrap';
 import './GroceryInputs.css';
 

@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import GroceryInputs from '../GroceryInputs/GroceryInputs';
 import './Main.css';
-import ApiUtil from "../util/apiUtil";
 import GroceryList from "../GroceryList/GroceryList";
+var axios = require('axios');
 
 export default class Main extends Component {
   constructor(){
-
     super()
     this.getList = this.getList.bind(this);
     this.sendData = this.sendData.bind(this);
@@ -18,16 +17,17 @@ export default class Main extends Component {
 }
 
 sendData(foodObj) {
-  fetch('/items', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
+  axios('/items', {
+    //method: 'POST',
+    //headers: { 'Content-Type': 'application/json' },
+    //body: JSON.stringify({
       name: foodObj.name,
       quantity: foodObj.quantity,
-    })
-  }).then((res) => {
-    return res.json();
-  }).then((data) => {
+    //})
+  }).then((data)=>{
+  //}).then((res) => {
+   // return res.json();
+  //}).then((data) => {
     this.setState({
       items: data
     });
@@ -71,15 +71,14 @@ getList(){
       initialized: false
     });
   }
-  fetch('/items').then((webObj)=>{
-    return webObj.json();
-  }).then((data)=>{
+  axios.get('/items').then((res)=>{
     this.setState({
-      items:data,
+      items:res.data,
       initialized: true,
     });
   })
 }
+
 componentDidMount(){
   this.getList();
 }

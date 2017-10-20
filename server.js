@@ -11,6 +11,7 @@ var passwordHash = require("password-hash");
 var mongoose = require('mongoose');
 var uriUtil = require('mongodb-uri');
 var Item = require('./models/items.js');
+var cookieParser = require('cookie-parser');
 
 var mongodbUri = 'mongodb://localhost/items';
 var mongooseUri = uriUtil.formatMongoose(mongodbUri);
@@ -58,7 +59,6 @@ passport.serializeUser(function(user, done){
 passport.deserializeUser(function(id, done){
   User.findById(id, function(err, user){
     if (err) {
-      console.log(err);
     } else {
       done(null, user);
     }
@@ -89,15 +89,17 @@ app.post('/items', function (req, res, next) {
 });
 
 app.get('/items', function (req, res, next) {
+  if (req.user) {
   Item.find(function (err, item) {
     if (err) {
       console.log(err);
       next(err);
     } else {
       res.json(item);
-      console.log(item);
     }
-  });
+})} else {
+  res.json({found: true, success: false, message: "You are not authenticated."})
+  }
 })
 
 app.put('/items/:id', (req, res, next) => {
@@ -182,18 +184,22 @@ app.post("/signup", (req, res, next) => {
 
 app.post('/login', function (req, res, next) {
   passport.authenticate('local', function(err, user){
-    
     if(err){
       res.json({found: false, success: false, err: true, message: err});
     } else if(user){
-      res.json({found: true, success: true, firstName: user.firstName, lastName: user.lastName});
+      req.logIn(user, (e)=>{
+        if (e) {
+          res.json({found: true, success: false, message: e})
+        } else {
+          res.json({found: true, success: true, firstName: user.firstName, lastName: user.lastName})
+        }
+      })
     } else {
       res.json({found: false, success: false, message: "password and username don't match"})
     }
   })(req, res, next);
   var email = req.body.email;
   var password = req.body.password;
-
 });
 
 app.post("/create-house", (req, res, next) => {

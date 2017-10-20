@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, FormGroup, Label, Input } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
 import './Login.css';
+var axios = require('axios');
 
 class Login extends Component{
   constructor(){
@@ -24,19 +25,21 @@ class Login extends Component{
   }
   submitLogin() {
     var url = '/login';
-    fetch(url, {                      
-        method: "POST",
-        headers:{"Content-Type":"application/json"}, 
-        body: JSON.stringify(
-          {
+    //fetch(url, {                      
+      axios.post(url, {
+//        method: "POST",
+ //       headers:{"Content-Type":"application/json"}, 
+  //      body: JSON.stringify(
+   //       {
             username: this.state.email,
             password: this.state.password
-          }
-        )
-      }).then(function (response) { 
-        return response.json();
+    //      }
+     //   )
+     // }).then(function (response) { 
+      //  return response.json();
     }).then((userObj) => {
-      if (userObj.success) { 
+      console.log(userObj);
+      if (userObj.data.success) { 
         this.props.history.push("/main");
       }  else {
         this.setState({message: userObj.message});
