@@ -4,11 +4,10 @@ let bodyParser = require("body-parser");
 var fetch = require('node-fetch');
 var User = require("./models/users");
 var House = require("./models/house");
-
-app.use(express.static('public'));
-app.use(bodyParser.json({ type: 'application/json' }));
-app.use(bodyParser.urlencoded({ extended: true }));
-
+var expressSession = require("express-session");
+var passport = require("passport");
+var LocalStrategy = require("passport-local").Strategy;
+var passwordHash = require("password-hash");
 var mongoose = require('mongoose');
 var uriUtil = require('mongodb-uri');
 var Item = require('./models/items.js');
@@ -26,6 +25,43 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
   console.log('Item database connected.');
 });
+
+app.use(bodyParser.json({ type: 'application/json' }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(expressSession({secret: "mark rules"}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.static('public'));
+
+passport.use(new LocalStrategy({username:"email", password:"password"}, function(email, password, done){
+  User.findOne({
+    email: email
+  }, (err, foundUser) => {
+    if (err) {
+      console.log(err);
+    } else {
+      if(passwordHash.verify(password, foundUser.password)){
+        return done(null, foundUser);
+      }
+    }
+  })
+})
+)
+
+passport.serializeUser(function(user, done){
+  done(null, user._id);
+})
+
+passport.deserializeUser(function(id, done){
+  User.findById(id, function(err, user){
+    if (err) {
+      console.log(err);
+    } else {
+      done(null, user);
+    }
+  })
+})
+
 
 app.post('/items', function (req, res, next) {
   var item = new Item();
@@ -67,6 +103,7 @@ app.put('/items/:id', (req, res, next) => {
       console.log(err);
       next(err);
     } else {
+      item.selector = req.body.selector;
       item.save((err, itemReturned) => {
         if (err) {
           console.log(err);
@@ -139,41 +176,45 @@ app.post("/signup", (req, res, next) => {
 });
 
 app.post('/login', function (req, res, next) {
+  passport.authenticate('local', function(err, user){
+    console.log(user);
+  })(req, res, next);
   var email = req.body.email;
   var password = req.body.password;
-  User.findOne({
-    email: email
-  }, function (err, user) {
-    if (err) {
-      res.json({
-        found: false,
-        message: err,
-        success: false
-      });
-    } else {
-      if (user) {
-        if (password === user.password) {
-          res.json({
-            found: true,
-            message: "Welcome " + user.firstName,
-            success: true
-          });
-        } else {
-          res.json({
-            found: true,
-            message: "Incorrect Password",
-            success: false
-          });
-        }
-      } else {
-        res.json({
-          found: false,
-          message: "User doesn't exist in database",
-          success: false
-        });
-      }
-    }
-  });
+  //res.json("something");
+  // User.findOne({
+  //   email: email
+  // }, function (err, user) {
+  //   if (err) {
+  //     res.json({
+  //       found: false,
+  //       message: err,
+  //       success: false
+  //     });
+  //   } else {
+  //     if (user) {
+  //       if (password === user.password) {
+  //         res.json({
+  //           found: true,
+  //           message: "Welcome " + user.firstName,
+  //           success: true
+  //         });
+  //       } else {
+  //         res.json({
+  //           found: true,
+  //           message: "Incorrect Password",
+  //           success: false
+  //         });
+  //       }
+  //     } else {
+  //       res.json({
+  //         found: false,
+  //         message: "User doesn't exist in database",
+  //         success: false
+  //       });
+  //     }
+  //   }
+  // });
 });
 
 app.post("/create-house", (req, res, next) => {

@@ -15,6 +15,7 @@ export default class GroceryItem extends Component {
   }
 
   render() { 
+    console.log(this.props)
       return (
         <tr>
           <td><ListGroup>

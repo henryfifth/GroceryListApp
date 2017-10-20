@@ -1,0 +1,24 @@
+.signup{
+  background: url('../main-background.jpg'); 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 100vh;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.field {
+  margin-top: 10%
+}
+
+.inputter{
+  width: 25% !important;
+  margin-left: 38%;
+}
+
+.signup-button{
+  margin-left: 47%
+}

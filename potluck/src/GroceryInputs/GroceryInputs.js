@@ -6,7 +6,7 @@ import './GroceryInputs.css';
 export default class List extends Component {
   constructor() {
     super()
-    this.createList = this.createList.bind(this);
+    this.addToList = this.addToList.bind(this);
     this.updateInput = this.updateInput.bind(this);
     this._handleKeyPress = this._handleKeyPress.bind(this);
     this.updateQuantity = this.updateQuantity.bind(this);
@@ -15,12 +15,6 @@ export default class List extends Component {
       quantity: "",
       items: []
     }
-  }
-
-  componentDidMount() {
-    this.setState({
-      items: this.props.items
-    });
   }
 
   updateInput(i) {
@@ -35,12 +29,12 @@ export default class List extends Component {
     })
   }
 
-  createList() {
+  addToList() {
     this.props.sendData({
       name:this.state.input,
       quantity:this.state.quantity
     });
-    
+
     this.setState({
       input: "",
       quantity: "",
@@ -49,7 +43,7 @@ export default class List extends Component {
 
   _handleKeyPress(e) {
     if (e.key === "Enter") {
-      this.createList();
+      this.addToList();
     }
   }
   render() {
@@ -59,7 +53,7 @@ export default class List extends Component {
         <InputGroup className='mufu'>
           <Input value={this.state.input} onChange={this.updateInput} onKeyPress={this._handleKeyPress} placeholder="New item..." />
           <Input type='number' value={this.state.quantity} onChange={this.updateQuantity} onKeyPress={this._handleKeyPress} placeholder="Quantity..." />
-          <InputGroupButton disabled={!isEnabled} color="primary" onClick={this.createList} >Add Item</InputGroupButton>
+          <InputGroupButton disabled={!isEnabled} color="primary" onClick={this.addToList} >Add Item</InputGroupButton>
         </InputGroup>
       </div>
     )

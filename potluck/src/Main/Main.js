@@ -48,6 +48,8 @@ deleteItem(id) {
 };
 
 selectorToServer(id, isSelected) {
+  console.log(id)
+  console.log(isSelected)
   fetch('/items/' + id, {
   method: 'PUT',
   headers: { 'Content-Type': 'application/json' },
@@ -89,8 +91,8 @@ componentDidMount(){
   }
 
   render(){
+    console.log(this.state);
     if (this.state.initialized) {
-      debugger;
   return(
     <div className='main'>
       <GroceryInputs className='grocery-inputs' 

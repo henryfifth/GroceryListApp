@@ -1,6 +1,7 @@
 import React, { Component } from 'react'; 
 import { Button, FormGroup, Label, Input } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
+import './Login.css';
 
 class Login extends Component{
   constructor(){
@@ -28,7 +29,7 @@ class Login extends Component{
         headers:{"Content-Type":"application/json"}, 
         body: JSON.stringify(
           {
-            email: this.state.email,
+            username: this.state.email,
             password: this.state.password
           }
         )
@@ -50,7 +51,7 @@ _handleKeyPress(e){
 }
   render(){ 
     return(
-      <div>
+      <div className='signup'>
         <h1 className="mb-3">Login</h1>
         {this.state.message}
         <FormGroup>
