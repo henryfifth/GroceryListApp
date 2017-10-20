@@ -39,9 +39,12 @@ passport.use(new LocalStrategy({username:"email", password:"password"}, function
   }, (err, foundUser) => {
     if (err) {
       console.log(err);
+      return done(err, null)
     } else {
       if(passwordHash.verify(password, foundUser.password)){
         return done(null, foundUser);
+      } else {
+        return done("password and username don't match", null);
       }
     }
   })
@@ -179,44 +182,18 @@ app.post("/signup", (req, res, next) => {
 
 app.post('/login', function (req, res, next) {
   passport.authenticate('local', function(err, user){
-    console.log(user);
+    
+    if(err){
+      res.json({found: false, success: false, err: true, message: err});
+    } else if(user){
+      res.json({found: true, success: true, firstName: user.firstName, lastName: user.lastName});
+    } else {
+      res.json({found: false, success: false, message: "password and username don't match"})
+    }
   })(req, res, next);
   var email = req.body.email;
   var password = req.body.password;
-  //res.json("something");
-  // User.findOne({
-  //   email: email
-  // }, function (err, user) {
-  //   if (err) {
-  //     res.json({
-  //       found: false,
-  //       message: err,
-  //       success: false
-  //     });
-  //   } else {
-  //     if (user) {
-  //       if (password === user.password) {
-  //         res.json({
-  //           found: true,
-  //           message: "Welcome " + user.firstName,
-  //           success: true
-  //         });
-  //       } else {
-  //         res.json({
-  //           found: true,
-  //           message: "Incorrect Password",
-  //           success: false
-  //         });
-  //       }
-  //     } else {
-  //       res.json({
-  //         found: false,
-  //         message: "User doesn't exist in database",
-  //         success: false
-  //       });
-  //     }
-  //   }
-  // });
+
 });
 
 app.post("/create-house", (req, res, next) => {
