@@ -1,5 +1,5 @@
 import React, { Component } from 'react'; 
-import { Button, Form, FormGroup, Label, Input, FormText, Alert } from 'reactstrap';
+import { Button, FormGroup, Label, Input } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
 
 class JoinHouse extends Component{

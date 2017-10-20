@@ -1,8 +1,5 @@
 import React, { Component } from 'react'; 
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
-import {
-  Redirect
-} from 'react-router-dom';
+import { Button, FormGroup, Label, Input } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
 class SignUp extends Component{
   constructor() {

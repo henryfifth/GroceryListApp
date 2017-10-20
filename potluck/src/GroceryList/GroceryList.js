@@ -1,42 +1,30 @@
 import React, { Component } from 'react';
-import { Table, ListGroup } from 'reactstrap';
+import { Table } from 'reactstrap';
 import GroceryItem from '../GroceryItem/GroceryItem';
 import './GroceryList.css';
 
 export default class GroceryList extends Component {
   constructor(){
-    super();
-    this.selectorToServer = this.selectorToServer.bind(this);
-    this.state = {
-      selector: 0
-    }
-  }
- 
-  selectorToServer(id) {
-    fetch('/items/' + id, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        selector: this.state.selector
-      })
-    }).then((res) => {
-      console.log(res);
-      return res.json();
-    }).then((data) => {
-      this.setState({
-        selector: data.selector
-      });
-    });
+
+    super()
+    // this.sortFunc = this.sortFunc.bind(this);
+    //this.selectorToServer = this.selectorToServer.bind(this);
   }
 
-  render(){
-    console.log("HERE")
-    console.log(this.state.selector);
-    let newList = this.props.items.map((item, i)=>{
-      return <GroceryItem class='grocery-item' deleteItem={this.props.deleteItem} items={this.props.items[i]} selectorToServer={this.selectorToServer}/>
+sortFunc(array){ 
+  array.sort((a,b)=>{
+     return (b.selector) - (a.selector);
     })
-    console.log(newList)
-  return(                                                                                   
+    return array;
+  }  
+  
+  render(){
+    let sortedBySelector = this.sortFunc(this.props.items)
+    let newList = sortedBySelector.map((item, i)=>{
+      return <GroceryItem className='grocery-item' key={i} selectorToServer={this.props.selectorToServer} deleteItem={this.props.deleteItem} item={item}/>
+
+    })
+    return(                                                                                   
     <div class='list-group'>
       <Table >
         <tbody >
@@ -44,6 +32,4 @@ export default class GroceryList extends Component {
       </tbody>   
       </Table>
     </div>
-  )
-  }
-}
+  )}}

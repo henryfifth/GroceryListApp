@@ -6,22 +6,15 @@ import './GroceryInputs.css';
 export default class List extends Component {
   constructor() {
     super()
-    this.createList = this.createList.bind(this);
+    this.addToList = this.addToList.bind(this);
     this.updateInput = this.updateInput.bind(this);
     this._handleKeyPress = this._handleKeyPress.bind(this);
-    this.deleteItem = this.deleteItem.bind(this);
     this.updateQuantity = this.updateQuantity.bind(this);
     this.state = {
       input: "",
       quantity: "",
       items: []
     }
-  }
-
-  componentDidMount() {
-    this.setState({
-      items: this.props.items
-    });
   }
 
   updateInput(i) {
@@ -36,40 +29,12 @@ export default class List extends Component {
     })
   }
 
-  sendData() {
-    fetch('/items', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: this.state.input,
-        quantity: this.state.quantity,
-        selector: 0
-      })
-    }).then((res) => {
-      return res.json();
-    }).then((data) => {
-      this.setState({
-        items: data
-      });
+  addToList() {
+    this.props.sendData({
+      name:this.state.input,
+      quantity:this.state.quantity
     });
-  };
 
-  deleteItem(id) {
-    return fetch('/items/' + id, {
-      method: 'DELETE'
-    }).then((res) => {
-      console.log(res);
-      return res.json();
-    }).then((data) => {
-      this.setState({
-        items: data
-      });
-    });
-  };
-
-
-  createList() {
-    this.sendData()
     this.setState({
       input: "",
       quantity: "",
@@ -78,7 +43,7 @@ export default class List extends Component {
 
   _handleKeyPress(e) {
     if (e.key === "Enter") {
-      this.createList();
+      this.addToList();
     }
   }
   render() {
@@ -88,10 +53,8 @@ export default class List extends Component {
         <InputGroup className='mufu'>
           <Input value={this.state.input} onChange={this.updateInput} onKeyPress={this._handleKeyPress} placeholder="New item..." />
           <Input type='number' value={this.state.quantity} onChange={this.updateQuantity} onKeyPress={this._handleKeyPress} placeholder="Quantity..." />
-          <InputGroupButton disabled={!isEnabled} color="primary" onClick={this.createList} >Add Item</InputGroupButton>
-
+          <InputGroupButton disabled={!isEnabled} color="primary" onClick={this.addToList} >Add Item</InputGroupButton>
         </InputGroup>
-        <GroceryList className='grocery-inputs' deleteItem={this.deleteItem} items={this.state.items} class='main' />
       </div>
     )
   }

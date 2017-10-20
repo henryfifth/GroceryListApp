@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Button, ListGroupItem, ListGroup } from 'reactstrap';
+import { Button, ListGroupItem, ListGroup } from 'reactstrap';
 import './GroceryItem.css';
 
 export default class GroceryItem extends Component {
@@ -10,22 +10,24 @@ export default class GroceryItem extends Component {
 
 
   selectorToggle(id) {
-      this.props.selectorToServer(id);
+
+    let toggleValue = !this.props.item.selector;
+    this.props.selectorToServer(id, toggleValue);
   }
 
-
-  render() {
-    return (
+  render() { 
+    console.log(this.props)
+      return (
         <tr>
           <td><ListGroup>
-              <ListGroupItem action onClick={() => this.selectorToggle(this.props.items._id)}>
-             {this.props.items.name}
+              <ListGroupItem action onClick={() => this.selectorToggle(this.props.item._id)}>
+             {this.props.item.name}
              </ListGroupItem></ListGroup></td>
-          <td><ListGroup><ListGroupItem>{this.props.items.quantity}</ListGroupItem></ListGroup></td>
-          <td><Button class='delete' onClick={() => this.props.deleteItem(this.props.items._id)} color="danger">X</Button>
+          <td><ListGroup><ListGroupItem>{this.props.item.quantity}</ListGroupItem></ListGroup></td>
+          <td><Button class='delete' onClick={() => this.props.deleteItem(this.props.item._id)} color="danger">X</Button>
           </td>
         </tr>
       
     )
+    }
   }
-}
