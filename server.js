@@ -103,6 +103,7 @@ app.put('/items/:id', (req, res, next) => {
       console.log(err);
       next(err);
     } else {
+
       item.selector = req.body.selector;
       item.save((err, itemReturned) => {
         if (err) {
@@ -118,6 +119,7 @@ app.put('/items/:id', (req, res, next) => {
             }
           });
         }
+
       });
     };
   })

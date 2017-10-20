@@ -10,6 +10,7 @@ export default class GroceryItem extends Component {
 
 
   selectorToggle(id) {
+
     let toggleValue = !this.props.item.selector;
     this.props.selectorToServer(id, toggleValue);
   }
