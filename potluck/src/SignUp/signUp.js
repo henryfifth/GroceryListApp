@@ -84,7 +84,7 @@ class SignUp extends Component{
   render(){ 
     return(
       <div>
-        <h1 className="mb-3">Signup</h1>
+        <h1>Signup</h1>
         {this.state.message}
         <FormGroup>
           <Label for="firstName">First Name</Label>{' '}

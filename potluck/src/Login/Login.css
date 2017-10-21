@@ -1,4 +1,4 @@
-.signup{
+.login{
   background: url('../main-background.jpg'); 
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -14,11 +14,18 @@
   margin-top: 10%
 }
 
-.inputter{
-  width: 25% !important;
-  margin-left: 38%;
+/* .login-button{
+  margin-left: 30%;
+  margin-right: 30%;
+  width: 40%;
 }
 
-.signup-button{
-  margin-left: 47%
-}
+.login-input{
+  margin-left: 30%;
+  margin-right: 30%;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+} */
+
+ 

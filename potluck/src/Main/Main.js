@@ -17,19 +17,12 @@ export default class Main extends Component {
 }
 
 sendData(foodObj) {
-  axios('/items', {
-    //method: 'POST',
-    //headers: { 'Content-Type': 'application/json' },
-    //body: JSON.stringify({
+  axios.post('/items', {
       name: foodObj.name,
       quantity: foodObj.quantity,
-    //})
   }).then((data)=>{
-  //}).then((res) => {
-   // return res.json();
-  //}).then((data) => {
     this.setState({
-      items: data
+      items: data.data
     });
   });
 };
@@ -72,6 +65,7 @@ getList(){
     });
   }
   axios.get('/items').then((res)=>{
+    console.log(res.data)    
     this.setState({
       items:res.data,
       initialized: true,

@@ -2,14 +2,12 @@ import React, { Component } from 'react';
 import { Button, FormGroup, Label, Input } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
 import './Login.css';
-var axios = require('axios');
 
 class Login extends Component{
   constructor(){
     super();
     this.inputemailChange = this.inputemailChange.bind(this);
     this.inputpasswordChange = this.inputpasswordChange.bind(this);
-    this.submitLogin = this.submitLogin.bind(this);
     this._handleKeyPress = this._handleKeyPress.bind(this);
     this.state = { 
       email: '',
@@ -23,29 +21,7 @@ class Login extends Component{
   inputpasswordChange(event) {
     this.setState({password: event.target.value});
   }
-  submitLogin() {
-    var url = '/login';
-    //fetch(url, {                      
-      axios.post(url, {
-//        method: "POST",
- //       headers:{"Content-Type":"application/json"}, 
-  //      body: JSON.stringify(
-   //       {
-            username: this.state.email,
-            password: this.state.password
-    //      }
-     //   )
-     // }).then(function (response) { 
-      //  return response.json();
-    }).then((userObj) => {
-      console.log(userObj);
-      if (userObj.data.success) { 
-        this.props.history.push("/main");
-      }  else {
-        this.setState({message: userObj.message});
-      }
-    }); 
-  }
+
 
 _handleKeyPress(e){
   if(e.key === "Enter"){
@@ -53,21 +29,22 @@ _handleKeyPress(e){
   }
 }
   render(){ 
+    console.log(this.state);
     return(
-      <div className='signup'>
+      <div className='login'>
         <h1 className="mb-3">Login</h1>
         {this.state.message}
         <FormGroup>
         <Label for="email">Email</Label>{' '}
-        <Input type="email" onChange={this.inputemailChange} name="email" id="email" placeholder="you@something.com" />
+        <Input className='login-input' type="email" onChange={this.inputemailChange} name="email" id="email" placeholder="you@something.com" />
       </FormGroup>
         {' '}
         <FormGroup>
           <Label for="password">Password</Label>{' '}
-          <Input type="password" onChange={this.inputpasswordChange} value={this.state.password} name="password" id="password" onKeyPress={this._handleKeyPress}  />
+          <Input className='login-input' type="password" onChange={this.inputpasswordChange} value={this.state.password} name="password" id="password" onKeyPress={this._handleKeyPress}  />
         </FormGroup>
         {' '}
-        <Button onClick={this.submitLogin} >Submit</Button>
+        <Button className="login-button" onClick={this.props.submitLogin} >Submit</Button>
     
       </div>
     );
