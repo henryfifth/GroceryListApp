@@ -21,30 +21,34 @@ constructor(){
     email: "",
     password: "",
     message:"",
+    currentUser: {
+      firstName: "",
+    }
   }
 }
 
-  submitLogin() {
+  submitLogin(a, b) {
     var url = '/login';
       axios.post(url, {
-            username: this.state.email,
-            password: this.state.password,
+            username: a,
+            password: b,
     }).then((userObj) => {
-      console.log(userObj);
-      if (userObj.data.success) { 
-        this.props.history.push("/main");
-      }  else {
-        this.setState({message: userObj.data.message});
+      console.log(userObj.data.firstName)
+        this.setState({
+          currentUser: {
+            firstName: userObj.data.firstName
+          }
+          });
       }
-    }); 
-  }
+    )}
   
   render() {
+    console.log(this.state.currentUser)
     return (
      
         <Router>
            <div>
-             <Route path='/' render={()=><Navvy/>} />
+             <Route path='/' render={()=><Navvy currentUser={this.state.currentUser}/>} />
              <Route path='/Login' render={() => <Login submitLogin={this.submitLogin} />}/>
              <Route path='/Signup' render={()=> <SignUp/>}/> 
              <Route path='/Main' render={()=> <Main/>}/>

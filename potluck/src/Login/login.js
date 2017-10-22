@@ -8,6 +8,7 @@ class Login extends Component{
     super();
     this.inputemailChange = this.inputemailChange.bind(this);
     this.inputpasswordChange = this.inputpasswordChange.bind(this);
+    this.testFunc = this.testFunc.bind(this);
     this._handleKeyPress = this._handleKeyPress.bind(this);
     this.state = { 
       email: '',
@@ -22,14 +23,19 @@ class Login extends Component{
     this.setState({password: event.target.value});
   }
 
+  testFunc(a, b){
+    console.log(a)
+    console.log(b)
+    this.props.submitLogin(a, b);
+    this.props.history.push("/main");
+  }
 
 _handleKeyPress(e){
   if(e.key === "Enter"){
-    this.submitLogin();
+    this.testFunc(this.state.email, this.state.password);
   }
 }
   render(){ 
-    console.log(this.state);
     return(
       <div className='login'>
         <h1 className="mb-3">Login</h1>
@@ -44,7 +50,7 @@ _handleKeyPress(e){
           <Input className='login-input' type="password" onChange={this.inputpasswordChange} value={this.state.password} name="password" id="password" onKeyPress={this._handleKeyPress}  />
         </FormGroup>
         {' '}
-        <Button className="login-button" onClick={this.props.submitLogin} >Submit</Button>
+        <Button className="login-button" onClick={() => this.testFunc(this.state.email, this.state.password)} >Submit</Button>
     
       </div>
     );

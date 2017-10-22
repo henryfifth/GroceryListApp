@@ -17,6 +17,27 @@ export default class Navvy extends Component {
     });
   }
   render(){
+    // if (this.props.currentUser.length > 0) {
+    //   <div id="navvy">
+    //   <Navbar color="success" light expand="md">
+    //     <NavbarBrand href="/main">Potluck</NavbarBrand>
+    //     <NavbarToggler onClick={this.toggle} />
+    //     <Collapse isOpen={this.state.isOpen} navbar>
+    //       <Nav className="ml-auto" navbar>
+    //         <NavItem>
+    //           Hello, {this.props.currentUser.firstName}
+    //         </NavItem>
+    //         <NavItem>
+    //           <NavLink href="/house" >Create House</NavLink>
+    //         </NavItem>
+    //         <NavItem>
+    //         <NavLink href="/join-house" >Join House</NavLink>
+    //         </NavItem>
+    //       </Nav>
+    //     </Collapse>
+    //   </Navbar>
+    // </div>
+    // } else {
     return(                                                                                   
     <div id="navvy">
         <Navbar color="success" light expand="md">

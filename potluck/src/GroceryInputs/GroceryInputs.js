@@ -46,6 +46,12 @@ export default class List extends Component {
     }
   }
   render() {
+    if (this.props.items.success === false) {
+      return(
+        <div>
+        </div>
+      )
+    } else {
     const isEnabled = this.state.input.length > 0;
     return (
       <div className='grocery-inputs'>
@@ -55,6 +61,7 @@ export default class List extends Component {
           <InputGroupButton disabled={!isEnabled} color="primary" onClick={this.addToList} >Add Item</InputGroupButton>
         </InputGroup>
       </div>
-    )
+      )
+    }
   }
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import GroceryInputs from '../GroceryInputs/GroceryInputs';
 import './Main.css';
+import { Card, CardTitle } from 'reactstrap';
 import GroceryList from "../GroceryList/GroceryList";
 var axios = require('axios');
 
@@ -28,32 +29,20 @@ sendData(foodObj) {
 };
 
 deleteItem(id) {
-  return fetch('/items/' + id, {
-    method: 'DELETE'
-  }).then((res) => {
-    console.log(res);
-    return res.json();
-  }).then((data) => {
+  axios.delete('/items/' + id)
+  .then((data) => {
+    console.log(data)
     this.setState({
-      items: data
+      items: data.data
     });
   });
 };
 
-selectorToServer(id, isSelected) {
-  console.log(id)
-  console.log(isSelected)
-  fetch('/items/' + id, {
-  method: 'PUT',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    selector: isSelected
-  })
-}).then((res) => {
-  return res.json();
-}).then((data) => {
+selectorToServer(id, toggleValue) {
+  axios.put('/items/' + id, {selector: toggleValue}, {headers: { 'Content-Type': 'application/json' }}
+).then((data) => {
   this.setState({
-    items: data
+    items: data.data
   });
 });
 }
@@ -64,10 +53,10 @@ getList(){
       initialized: false
     });
   }
-  axios.get('/items').then((res)=>{
-    console.log(res.data)    
+  axios.get('/items')
+  .then((data)=>{
     this.setState({
-      items:res.data,
+      items:data.data,
       initialized: true,
     });
   })
@@ -84,12 +73,21 @@ componentDidMount(){
   }
 
   render(){
-    console.log(this.state);
-    if (this.state.initialized) {
+    if (this.state.initialized === false) {
+      return (
+        <div className='main'>
+        <h2>
+          Loading...
+        </h2>
+        </div>
+      )}
+
+    else {
   return(
     <div className='main'>
       <GroceryInputs className='grocery-inputs' 
         sendData={this.sendData} 
+        items={this.state.items}
        state={this.state} />
       <GroceryList 
         className='grocery-inputs' 
@@ -99,11 +97,6 @@ componentDidMount(){
         class='main' 
       />
     </div>
-  )} else {
-    return (
-      <h2>
-        Loading...
-      </h2>
-    )}
+  )} 
   }
 }

@@ -82,6 +82,7 @@ class SignUp extends Component{
     }
   }
   render(){ 
+    console.log(this.props.history)
     return(
       <div>
         <h1>Signup</h1>

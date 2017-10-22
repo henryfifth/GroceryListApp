@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { Table } from 'reactstrap';
 import GroceryItem from '../GroceryItem/GroceryItem';
 import './GroceryList.css';
+import {withRouter} from "react-router-dom";
 
-export default class GroceryList extends Component {
+class GroceryList extends Component {
 
 sortFunc(array){ 
   array.sort((a,b)=>{
@@ -13,6 +14,13 @@ sortFunc(array){
   }  
   
   render(){
+    if (this.props.items.success === false) {
+      return(
+        <div>
+          Login error. Please retry.
+        </div>
+      )
+    } else {
     let sortedBySelector = this.sortFunc(this.props.items)
     let newList = sortedBySelector.map((item, i)=>{
       return <GroceryItem className='grocery-item' key={i} selectorToServer={this.props.selectorToServer} deleteItem={this.props.deleteItem} item={item}/>
@@ -26,4 +34,6 @@ sortFunc(array){
       </tbody>   
       </Table>
     </div>
-  )}}
+  )}}}
+
+export default withRouter(GroceryList);

@@ -53,11 +53,14 @@ passport.use(new LocalStrategy({username:"email", password:"password"}, function
 )
 
 passport.serializeUser(function(user, done){
+  console.log('serialize ran')
+  console.log(user)
   done(null, user._id);
 })
 
 passport.deserializeUser(function(id, done){
   User.findById(id, function(err, user){
+    console.log('deserialize ran')
     if (err) {
     } else {
       done(null, user);
@@ -89,18 +92,18 @@ app.post('/items', function (req, res, next) {
 });
 
 app.get('/items', function (req, res, next) {
-  if (req.user) {
+  console.log(req.user)
+  console.log('break')
   Item.find(function (err, item) {
     if (err) {
       console.log(err);
       next(err);
     } else {
+      console.log(item)
       res.json(item);
     }
-})} else {
-  res.json({found: true, success: false, message: "You are not authenticated."})
-  }
-})
+})}
+);
 
 app.put('/items/:id', (req, res, next) => {
   Item.findByIdAndUpdate({ _id: req.params.id }, "selector", (err, item) => {
@@ -108,7 +111,6 @@ app.put('/items/:id', (req, res, next) => {
       console.log(err);
       next(err);
     } else {
-
       item.selector = req.body.selector;
       item.save((err, itemReturned) => {
         if (err) {
@@ -184,10 +186,13 @@ app.post("/signup", (req, res, next) => {
 
 app.post('/login', function (req, res, next) {
   passport.authenticate('local', function(err, user){
+    console.log(req.body)
     if(err){
       res.json({found: false, success: false, err: true, message: err});
     } else if(user){
       req.logIn(user, (e)=>{
+        console.log(user)
+        console.log('login/post')
         if (e) {
           res.json({found: true, success: false, message: e})
         } else {
