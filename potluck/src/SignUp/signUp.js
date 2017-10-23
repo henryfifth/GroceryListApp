@@ -22,6 +22,7 @@ class SignUp extends Component{
     }
   }
   submitSignup(signupObj) {
+    console.log('fewfe')
     var url = '/signup';
     fetch(url, {
         method: "POST",

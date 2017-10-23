@@ -12,6 +12,7 @@ export default class Main extends Component {
     this.sendData = this.sendData.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
     this.selectorToServer = this.selectorToServer.bind(this);
+    this.getUser = this.getUser.bind(this);
     this.state = {
       initialized: false
     }
@@ -27,6 +28,13 @@ sendData(foodObj) {
     });
   });
 };
+
+getUser() {
+  axios.get('/user').then((res)=>{
+    console.log(res.data);
+  })
+  }
+
 
 deleteItem(id) {
   axios.delete('/items/' + id)
@@ -64,6 +72,7 @@ getList(){
 
 componentDidMount(){
   this.getList();
+  this.getUser();
 }
 
   _handleKeyPress = (e) => {
@@ -73,6 +82,7 @@ componentDidMount(){
   }
 
   render(){
+    console.log(this.state)
     if (this.state.initialized === false) {
       return (
         <div className='main'>
@@ -88,7 +98,7 @@ componentDidMount(){
       <GroceryInputs className='grocery-inputs' 
         sendData={this.sendData} 
         items={this.state.items}
-       state={this.state} />
+        state={this.state} />
       <GroceryList 
         className='grocery-inputs' 
         selectorToServer={this.selectorToServer} 

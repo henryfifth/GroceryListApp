@@ -1,6 +1,8 @@
 import React, { Component } from 'react'; 
 import { Button, FormGroup, Label, Input } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
+var axios = require('axios');
+
 
 class JoinHouse extends Component{
   constructor(){
@@ -34,19 +36,12 @@ class JoinHouse extends Component{
     this.setState({password: event.target.value});
   }
   joinIt() {
-    var url = '/join';
-    fetch(url, {                      
-        method: "PUT",
-        headers:{"Content-Type":"application/json"}, 
-        body: JSON.stringify(
-          {
+    axios.put('/join', {
             joinHouse: this.state.joinHouse,
             user: this.state.user,
             password: this.state.password
           })
-      }).then(function (response) { 
-        return response.json();
-    }).then((userObj) => {
+    .then((userObj) => {
       if (userObj.success) { 
         this.props.history.push("/main");
       }  else {

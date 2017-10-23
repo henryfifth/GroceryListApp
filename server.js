@@ -53,21 +53,17 @@ passport.use(new LocalStrategy({username:"email", password:"password"}, function
 )
 
 passport.serializeUser(function(user, done){
-  console.log('serialize ran')
-  console.log(user)
   done(null, user._id);
 })
 
 passport.deserializeUser(function(id, done){
   User.findById(id, function(err, user){
-    console.log('deserialize ran')
     if (err) {
     } else {
       done(null, user);
     }
   })
 })
-
 
 app.post('/items', function (req, res, next) {
   var item = new Item();
@@ -92,8 +88,7 @@ app.post('/items', function (req, res, next) {
 });
 
 app.get('/items', function (req, res, next) {
-  console.log(req.user)
-  console.log('break')
+  console.log('user: ' + req.user)
   Item.find(function (err, item) {
     if (err) {
       console.log(err);
@@ -126,7 +121,6 @@ app.put('/items/:id', (req, res, next) => {
             }
           });
         }
-
       });
     };
   })
@@ -157,6 +151,7 @@ app.post("/signup", (req, res, next) => {
   user.lastName = req.body.lastName;
   user.email = req.body.email;
   user.password = req.body.password;
+  user.house = null;
   User.findOne({
     email: user.email
   }, (err, foundUser) => {
@@ -186,13 +181,10 @@ app.post("/signup", (req, res, next) => {
 
 app.post('/login', function (req, res, next) {
   passport.authenticate('local', function(err, user){
-    console.log(req.body)
     if(err){
       res.json({found: false, success: false, err: true, message: err});
     } else if(user){
       req.logIn(user, (e)=>{
-        console.log(user)
-        console.log('login/post')
         if (e) {
           res.json({found: true, success: false, message: e})
         } else {
@@ -238,28 +230,55 @@ app.post("/create-house", (req, res, next) => {
   });
 });
 
+app.get('/user', (req,res,next)=>{
+  User.findById(req.user._id, (err, foundUser)=>{
+    if (err){
+      console.log(err)
+    } 
+  }).populate('house').exec((err, user)=>{
+    console.log(user);
+    res.json(user)
+  });
+});
+
 app.put('/join', (req, res, next) => {
+  console.log(req.user)  
   House.findOne({ "houseName": req.body.joinHouse }, "password users", (err, house) => {
     if (err) {
       console.log(err);
       next(err);
     } else {
-      if (req.body.password === house.password) {
-        house.users.push(req.body.user);
-        house.save((err, userReturned) => {
-          if (err) {
-            console.log(err);
-            next(err);
+      User.findById(req.user._id, (er, foundUser)=>{
+        if (err){
+          console.log(err)
+        } else {
+       
+        foundUser.house = house._id
+        foundUser.save((err, userReturned) =>{
+          if(err){
+            next(err)
           } else {
-            res.json('user updated in db' + userReturned.users);
+            res.json('fark' + userReturned)
           }
-        });
-      } else {
-        res.json('No password match found in database')
-      }
-    };
-  })
-});
+        })
+    //   console.log(house)
+    //   if (req.body.password === house.password) {
+    //     house.users.push(req.body.user);
+    //     house.save((err, userReturned) => {
+    //       if (err) {
+    //         console.log(err);
+    //         next(err);
+    //       } else {
+    //         res.json('user updated in db' + userReturned.users);
+    //       }
+    //     });
+    //   } else {
+    //     res.json('No password match found in database')
+    //   }
+    // };
+  }})
+  }})  
+})
 
 
 

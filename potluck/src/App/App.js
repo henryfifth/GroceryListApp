@@ -28,19 +28,22 @@ constructor(){
 }
 
   submitLogin(a, b) {
+    return new Promise((resolve, reject)=>{
     var url = '/login';
       axios.post(url, {
             username: a,
             password: b,
     }).then((userObj) => {
-      console.log(userObj.data.firstName)
+      //console.log(userObj.data.firstName)
         this.setState({
           currentUser: {
             firstName: userObj.data.firstName
           }
           });
-      }
-    )}
+          resolve();
+      });
+    });
+  }
   
   render() {
     console.log(this.state.currentUser)

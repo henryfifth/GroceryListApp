@@ -26,8 +26,11 @@ class Login extends Component{
   testFunc(a, b){
     console.log(a)
     console.log(b)
-    this.props.submitLogin(a, b);
-    this.props.history.push("/main");
+    this.props.submitLogin(a, b).then(()=>{
+   // setTimeout(function(){
+      this.props.history.push("/main");
+    });
+  //  }, 1000)
   }
 
 _handleKeyPress(e){
