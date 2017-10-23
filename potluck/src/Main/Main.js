@@ -19,10 +19,11 @@ export default class Main extends Component {
 }
 
 sendData(foodObj) {
-  axios.post('/items', {
+  axios.put('/houses', {
       name: foodObj.name,
       quantity: foodObj.quantity,
-  }).then((data)=>{
+  }, {headers: { 'Content-Type': 'application/json' }}).then((data)=>{
+    console.log(data)
     this.setState({
       items: data.data
     });
@@ -31,13 +32,15 @@ sendData(foodObj) {
 
 getUser() {
   axios.get('/user').then((res)=>{
-    console.log(res.data);
   })
-  }
+}
 
 
 deleteItem(id) {
-  axios.delete('/items/' + id)
+  console.log(id)
+  axios.put('/delete', {
+    _id: id
+  })
   .then((data) => {
     console.log(data)
     this.setState({
@@ -47,8 +50,9 @@ deleteItem(id) {
 };
 
 selectorToServer(id, toggleValue) {
-  axios.put('/items/' + id, {selector: toggleValue}, {headers: { 'Content-Type': 'application/json' }}
+  axios.put('/selector/', {_id: id, selector: toggleValue}, {headers: { 'Content-Type': 'application/json' }}
 ).then((data) => {
+  console.log(data)
   this.setState({
     items: data.data
   });
@@ -61,11 +65,12 @@ getList(){
       initialized: false
     });
   }
-  axios.get('/items')
+  axios.get('/houses')
   .then((data)=>{
+    console.log(data)
     this.setState({
       items:data.data,
-      initialized: true,
+      initialized: true
     });
   })
 }
@@ -90,7 +95,7 @@ componentDidMount(){
           Loading...
         </h2>
         </div>
-      )}
+        )}
 
     else {
   return(

@@ -24,8 +24,6 @@ class Login extends Component{
   }
 
   testFunc(a, b){
-    console.log(a)
-    console.log(b)
     this.props.submitLogin(a, b).then(()=>{
    // setTimeout(function(){
       this.props.history.push("/main");

@@ -15,6 +15,7 @@ export default class GroceryItem extends Component {
   }
 
   render() { 
+    console.log(this.props);
     if (this.props.item.selector === true) {
       return (
         <tr>

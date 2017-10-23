@@ -1,6 +1,9 @@
 import React, { Component } from 'react'; 
 import { Button, FormGroup, Label, Input } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
+var axios = require('axios');
+
+
 class SignUp extends Component{
   constructor() {
     super();
@@ -22,34 +25,27 @@ class SignUp extends Component{
     }
   }
   submitSignup(signupObj) {
-    console.log('fewfe')
-    var url = '/signup';
-    fetch(url, {
-        method: "POST",
-        headers:{"Content-Type":"application/json"}, 
-        body: JSON.stringify(
-          {
+    return new Promise((resolve, reject)=>{      
+    axios.post('/signup', {
             firstName: signupObj.firstName,
             lastName: signupObj.lastName,
             email: signupObj.email,
             password: signupObj.password
           }
-        )
-      }).then((response)=> { 
-        return response.json();
-      }).then((userObj) => { 
+      ).then((userObj) => { 
         if (userObj !== undefined) { 
           this.setState({
             firstName: userObj.firstName,
             message: userObj.message,
             lastName: userObj.lastName
-          }); 
-          this.props.history.push("/main");
+          })
+          resolve();
         }  else {
-          console.log('user add failed');
+          console.log('Undefined');
         }
-    }); 
-  }
+    });
+  })
+}
   handleSignup() {
     if (this.state.password === this.state.confirmPassword) {      
     this.submitSignup({

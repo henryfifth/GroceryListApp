@@ -87,37 +87,65 @@ app.post('/items', function (req, res, next) {
   });
 });
 
-app.get('/items', function (req, res, next) {
-  console.log('user: ' + req.user)
-  Item.find(function (err, item) {
+app.get('/houses', function (req, res, next) {
+  House.findById(req.user.house, (err, item) => {
     if (err) {
       console.log(err);
       next(err);
-    } else {
-      console.log(item)
-      res.json(item);
     }
-})}
-);
+    }).populate('items').exec((err, items)=>{
+      if (items == null){
+        console.log('oh well!')
+      } else {
+      res.json(items.items)
+    }})
+});
 
-app.put('/items/:id', (req, res, next) => {
-  Item.findByIdAndUpdate({ _id: req.params.id }, "selector", (err, item) => {
+app.put('/selector', (req, res, next) => {
+  House.findByIdAndUpdate({ _id: req.user.house }, "items", (err, house) => {
+    house.items.forEach(function(e, i) {
+      if(e._id == req.body._id){
+        e.selector = req.body.selector
+      }
+    });
+    house.save((err, itemReturned) => {
+      if (err) {
+        console.log(err);
+        next(err);
+      } else {
+        House.findById({_id: req.user.house},(err, house)=>{
+          if (err) {
+            console.log(err);
+            next(err);
+          } else {
+            res.json(house.items);
+           }
+          });
+       }
+      });
+    })
+  })
+
+app.put('/houses/', (req, res, next) => {
+  console.log(req.user.house);
+  console.log('^ REQUSER')
+  House.findByIdAndUpdate({ _id: req.user.house }, "items", (err, house) => {
     if (err) {
       console.log(err);
       next(err);
     } else {
-      item.selector = req.body.selector;
-      item.save((err, itemReturned) => {
+      house.items.push({name: req.body.name, quantity: req.body.quantity, selector: false})
+      house.save((err, itemReturned) => {
         if (err) {
           console.log(err);
           next(err);
         } else {
-          Item.find(function (err, item) {
+          House.findById({_id: req.user.house},(err, house)=>{
             if (err) {
               console.log(err);
               next(err);
             } else {
-              res.json(item);
+              res.json(house.items);
             }
           });
         }
@@ -126,24 +154,33 @@ app.put('/items/:id', (req, res, next) => {
   })
 });
 
-
-app.delete('/items/:id', function (req, res, next) {
-  Item.remove({ _id: req.params.id }, function (err, item) {
-    if (err) {
-      console.log(err);
-      next(err);
-    } else {
-      Item.find(function (err, item) {
-        if (err) {
-          console.log(err);
-          next(err);
-        } else {
-          res.json(item);
-        }
+app.put('/delete', (req, res, next) => {
+  House.findByIdAndUpdate({ _id: req.user.house }, "items", (err, house) => {
+    var num = null;
+    house.items.forEach(function(e, i) {
+      if(e._id == req.body._id){
+        num = house.items.indexOf(e);
+      }
+    });
+    house.items.splice(num, 1);
+    house.save((err, itemReturned) => {
+      if (err) {
+        console.log(err);
+        next(err);
+      } else {
+        House.findById({_id: req.user.house},(err, house)=>{
+          if (err) {
+            console.log(err);
+            next(err);
+          } else {
+            res.json(house.items);
+           }
+          });
+       }
       });
-    }
+    })
   })
-})
+
 
 app.post("/signup", (req, res, next) => {
   var user = new User();
@@ -288,3 +325,28 @@ app.listen(port, () => {
 });
 
 
+// app.put('/items/:id', (req, res, next) => {
+  //   Item.findByIdAndUpdate({ _id: req.params.id }, "selector", (err, item) => {
+  //     if (err) {
+  //       console.log(err);
+  //       next(err);
+  //     } else {
+  //       item.selector = req.body.selector;
+  //       item.save((err, itemReturned) => {
+  //         if (err) {
+  //           console.log(err);
+  //           next(err);
+  //         } else {
+  //           Item.find(function (err, item) {
+  //             if (err) {
+  //               console.log(err);
+  //               next(err);
+  //             } else {
+  //               res.json(item);
+  //             }
+  //           });
+  //         }
+  //       });
+  //     };
+  //   })
+  // });

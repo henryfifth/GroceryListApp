@@ -14,13 +14,8 @@ sortFunc(array){
   }  
   
   render(){
-    if (this.props.items.success === false) {
-      return(
-        <div>
-          Login error. Please retry.
-        </div>
-      )
-    } else {
+    console.log(this.props)
+
     let sortedBySelector = this.sortFunc(this.props.items)
     let newList = sortedBySelector.map((item, i)=>{
       return <GroceryItem className='grocery-item' key={i} selectorToServer={this.props.selectorToServer} deleteItem={this.props.deleteItem} item={item}/>
@@ -34,6 +29,6 @@ sortFunc(array){
       </tbody>   
       </Table>
     </div>
-  )}}}
+  )}}
 
 export default withRouter(GroceryList);
