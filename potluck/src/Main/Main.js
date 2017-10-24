@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import { Card, CardTitle, CardSubtitle, CardBody, CardText, } from 'reactstrap';
 import GroceryInputs from '../GroceryInputs/GroceryInputs';
 import './Main.css';
-// import { Card, CardTitle } from 'reactstrap';
 import GroceryList from "../GroceryList/GroceryList";
 var axios = require('axios');
 
@@ -23,7 +23,6 @@ sendData(foodObj) {
       name: foodObj.name,
       quantity: foodObj.quantity,
   }, {headers: { 'Content-Type': 'application/json' }}).then((data)=>{
-    console.log(data)
     this.setState({
       items: data.data
     });
@@ -42,7 +41,6 @@ deleteItem(id) {
     _id: id
   })
   .then((data) => {
-    console.log(data)
     this.setState({
       items: data.data
     });
@@ -50,9 +48,11 @@ deleteItem(id) {
 };
 
 selectorToServer(id, toggleValue) {
-  axios.put('/selector/', {_id: id, selector: toggleValue}, {headers: { 'Content-Type': 'application/json' }}
+  axios.put('/selector/', {
+    
+    _id: id, selector: toggleValue
+  }, {headers: { 'Content-Type': 'application/json' }}
 ).then((data) => {
-  console.log(data)
   this.setState({
     items: data.data
   });
@@ -67,7 +67,6 @@ getList(){
   }
   axios.get('/houses')
   .then((data)=>{
-    console.log(data)
     this.setState({
       items:data.data,
       initialized: true
@@ -90,9 +89,14 @@ componentDidMount(){
     if (this.state.initialized === false) {
       return (
         <div className='main'>
-        <h2>
-          Loading...
-        </h2>
+        <Card className='main-card'>
+          
+          <CardTitle>Welcome to Potluck!</CardTitle>{' '}
+          <CardSubtitle>Create a shared grocery list with your housemates.</CardSubtitle>{' '}
+          <CardBody> First, create a house for everyone to join. Already have a house? Navigate to Join House</CardBody>{' '}
+          
+           
+        </Card>
         </div>
         )}
 

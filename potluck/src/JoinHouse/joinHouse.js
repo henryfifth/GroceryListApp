@@ -1,6 +1,7 @@
 import React, { Component } from 'react'; 
-import { Button, FormGroup, Label, Input } from 'reactstrap';
+import { Button, FormGroup, Label, Input, Card, CardTitle, CardBody, CardSubtitle, CardText, Col } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
+import './JoinHouse.css';
 var axios = require('axios');
 
 
@@ -9,13 +10,11 @@ class JoinHouse extends Component{
     super();
     this.inputjoinHouse = this.inputjoinHouse.bind(this);
     this.inputemailChange = this.inputemailChange.bind(this);
-    this.inputUser = this.inputUser.bind(this);
     this.inputpasswordChange = this.inputpasswordChange.bind(this);
     this.joint = this.joint.bind(this);
     this._handleKeyPress = this._handleKeyPress.bind(this);
     this.state = { 
       joinHouse: '',
-      user: '',
       password: '', 
       message: ''
     }
@@ -24,11 +23,6 @@ class JoinHouse extends Component{
   inputjoinHouse(event) {
     this.setState({joinHouse: event.target.value});
   }
-
-  inputUser(event) {
-    this.setState({user: event.target.value});
-  }
-
   inputemailChange(event) {
     this.setState({email: event.target.value});
   }
@@ -38,14 +32,25 @@ class JoinHouse extends Component{
   joint() {
     axios.put('/join', {
             joinHouse: this.state.joinHouse,
-            user: this.state.user,
             password: this.state.password
           })
     .then((userObj) => {
-      if (userObj.success) { 
-        this.props.history.push("/main");
+      console.log(userObj);
+      console.log(this.state);
+      if (userObj.data.message === "House Does Not Match") {
+        this.setState({
+          message: userObj.data.message
+        })  
       }  else {
-        this.setState({message: userObj.message});
+        
+        this.setState({
+          message: userObj.data.message,
+          joinHouse: '',
+          password: '',
+  
+
+        });
+        this.props.history.push("/main");
       }
     }); 
   }
@@ -57,14 +62,21 @@ _handleKeyPress(e){
 }
   render(){ 
     return(
-      <div>
-        <h1 className="mb-3">Join a House</h1>
+      <div className='joinhouse'>
+
+        <Col className='join-col'></Col>
         {this.state.message}
-        <FormGroup>
+        <Card className='joinhouse-card'>
+          <CardBody>
+          <CardTitle className='joinhouse-title'> Join a House List </CardTitle>{' '}
+          <CardSubtitle> {this.state.message} </CardSubtitle>{' '}
+          <CardText>Enter your house name, username, and password to begin adding to your shared grocery list </CardText>{' '}
+        <FormGroup className='joinhouse-input'>
           <Label for="houseName">Enter House Name</Label>{' '}
           <Input type="text" onChange={this.inputjoinHouse} value={this.state.joinHouse} name="houseName" id="houseName" onKeyPress={this._handleKeyPress}  />
         </FormGroup>
         {' '}
+
         <FormGroup>
           <Label for="houseName">Enter Email</Label>{' '}
           <Input type="text" onChange={this.inputUser} value={this.state.user} name="houseName" id="houseName" onKeyPress={this._handleKeyPress}  />
@@ -75,8 +87,10 @@ _handleKeyPress(e){
           <Input type="password" onChange={this.inputpasswordChange} value={this.state.password} name="password" id="password" onKeyPress={this._handleKeyPress}  />
         </FormGroup>
         {' '}
-        <Button onClick={this.joint} >Submit</Button>
-    
+
+        <Button className='joinhouse-button' onClick={this.joinIt} >Submit</Button>
+    </CardBody>
+    </Card>
       </div>
     );
   };

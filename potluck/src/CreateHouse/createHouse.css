@@ -1,5 +1,4 @@
-.login-card {
-  align-content: center;
+.createhouse-card {
   margin-left: 30%;
   margin-right: 30%;
   width: 40%;
@@ -7,22 +6,21 @@
   padding: 30px;
 }
 
-.login-button{
+.createhouse-button{
   margin-left: 30%;
   margin-right: 30%;
   width: 40%;
 }
 
-.login-input{
+.createhouse-input{
   flex-direction: column;
 }
 
-.login-title{
+.createhouse-title{
+  padding: 5px;
   text-align: center;
 }
 
-.space{
-  margin-top: 9%;
+.create-col{
+  margin-top: 5%;
 }
-
- 

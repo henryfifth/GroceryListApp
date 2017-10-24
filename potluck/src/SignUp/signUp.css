@@ -1,23 +1,28 @@
-.main-button{
+
+
+.signup-card {
   margin-left: 30%;
   margin-right: 30%;
-  width: 40%;
-}
-
-.main-input{
-  margin-left: 30%;
-  margin-right: 30%;
-  width: 40%;
-}
-
-.grocery-inputs{
+  width: 50%;
   display: flex;
-  flex-direction: column;
 }
 
-.main-card{
+.signup-button{
   margin-left: 30%;
   margin-right: 30%;
-  width: 30%;
+  width: 40%;
+}
+
+.signup-input{
+  flex-direction: column;
+
+}
+
+.signup-title{
+  padding: 5px;
   text-align: center;
+}
+
+.signup-col{
+  margin-top: 2.5%;
 }

@@ -27,4 +27,17 @@
   to { transform: rotate(360deg); }
 }
 
-/**{display: none;} */
+
+*{display: none;}
+
+.bg{
+  background: url('../main-background.jpg'); 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 100vh;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
