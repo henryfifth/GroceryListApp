@@ -34,7 +34,8 @@ class House extends Component{
         body: JSON.stringify(
           {
             houseName: signupObj.houseName,
-            password: signupObj.password
+            password: signupObj.password,
+            roommates: signupObj.roommates
           }
         )
       }).then((response)=> { 
@@ -88,11 +89,11 @@ class House extends Component{
         </FormGroup>
         <FormGroup>
           <Label for="zip">Confirm Password</Label>{' '}
-          <Input type="password" onChange={this.confirmPassword} value={this.state.zip} name="confirm" id="confirm"  placeholder=""/>
+          <Input type="password" onChange={this.confirmPassword} value={this.state.zip} name="confirm" id="confirm"  placeholder="confirm password"/>
         </FormGroup>
         <FormGroup>
-          <Label for="state">Invite Roommates</Label>{' '}
-          <Input type="text" onChange={this.inviteRoommates} value={this.state.roommates} name="state" id="state"  placeholder="Emails go here, seperated by commas..."/>
+          <Label for="invite">Invite Roommates</Label>{' '}
+          <Input type="text" onChange={this.inviteRoommates} value={this.state.roommates} name="invite" id="invite"  placeholder="Emails go here, seperated by commas..."/>
         </FormGroup>
         {' '}
         {' '}

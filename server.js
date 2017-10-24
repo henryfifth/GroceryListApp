@@ -12,6 +12,7 @@ var mongoose = require('mongoose');
 var uriUtil = require('mongodb-uri');
 var Item = require('./models/items.js');
 var cookieParser = require('cookie-parser');
+const nodemailer = require('nodemailer');
 
 var mongodbUri = 'mongodb://localhost/items';
 var mongooseUri = uriUtil.formatMongoose(mongodbUri);
@@ -64,6 +65,59 @@ passport.deserializeUser(function(id, done){
     }
   })
 })
+
+//BEGIN CHECK IF EMAIL IS EMAIL
+function john(email){
+    let tim = email.replace(/ /g, '');
+    let jim = tim.split(',');
+    let arr = [];
+    jim.forEach((e, i)=>{
+        let x = jim.length;
+        let atpos = jim[i].indexOf("@");
+        let dotpos = jim[i].lastIndexOf(".");
+        if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length || atpos === -1) {
+
+        }else{
+            arr.push(jim[i])
+        }
+    });
+    arr = arr.toString();
+    return arr;
+}
+//END CHECK IF EMAIL IS EMAIL
+//BEGIN MAIL SHIT
+function bob(email){
+    let sean = john(email);
+
+  nodemailer.createTestAccount((err, account) => {
+    
+        let transporter = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 587,
+            secure: false, // true for 465, false for other ports
+            auth: {
+                user: 'idfkbob@gmail.com',
+                pass: 'ThisIsAPassword'
+            }
+        });
+    
+        let mailOptions = {
+            from: '"Fred Foo 👻" <idfkbob@gmail.com>',
+            to: sean,
+            subject: 'Hello ✔',
+            text: 'Hello world?',
+            html: '<b>IT WORKS</b>'
+        };
+    
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                return console.log(error);
+            }
+        });
+    });
+}
+//END MAIL SHIT
+
 
 app.post('/items', function (req, res, next) {
   var item = new Item();
@@ -127,8 +181,6 @@ app.put('/selector', (req, res, next) => {
   })
 
 app.put('/houses/', (req, res, next) => {
-  console.log(req.user.house);
-  console.log('^ REQUSER')
   House.findByIdAndUpdate({ _id: req.user.house }, "items", (err, house) => {
     if (err) {
       console.log(err);
@@ -240,6 +292,8 @@ app.post("/create-house", (req, res, next) => {
   var house = new House();
   house.houseName = req.body.houseName;
   house.password = req.body.password;
+  house.roomates = req.body.roommates;
+  bob(house.roomates);
   User.findOne({
     houseName: house.houseName
   }, (err, foundHouse) => {
@@ -273,13 +327,11 @@ app.get('/user', (req,res,next)=>{
       console.log(err)
     } 
   }).populate('house').exec((err, user)=>{
-    console.log(user);
     res.json(user)
   });
 });
 
 app.put('/join', (req, res, next) => {
-  console.log(req.user)  
   House.findOne({ "houseName": req.body.joinHouse }, "password users", (err, house) => {
     if (err) {
       console.log(err);
@@ -350,3 +402,65 @@ app.listen(port, () => {
   //     };
   //   })
   // });
+  /**
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+                  |
+                 |.|
+                 |.|
+                |\./|
+                |\./|
+.               |\./|               .
+ \^.\          |\\.//|          /.^/
+  \--.|\       |\\.//|       /|.--/
+    \--.| \    |\\.//|    / |.--/
+     \---.|\    |\./|    /|.---/
+        \--.|\  |\./|  /|.--/
+           \ .\  |.|  /. /
+ _ -_^_^_^_-  \ \\ // /  -_^_^_^_- _
+   - -/_/_/- ^_^/| |\^_^ -\_\_\- -
+             /_ / | \ _\
+                  |
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   */
