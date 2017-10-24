@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardTitle, CardSubtitle, CardBody, CardText, Col } from 'reactstrap';
+import { Card, CardTitle, CardSubtitle, CardBody, Col } from 'reactstrap';
 import GroceryInputs from '../GroceryInputs/GroceryInputs';
 import './Main.css';
 import GroceryList from "../GroceryList/GroceryList";

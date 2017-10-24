@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
 import Main from '../Main/Main';
-import SignUp from "../SignUp/signUp";
-import Login from "../Login/login";
+import SignUp from "../SignUp/SignUp";
+import Login from "../Login/Login";
 import Navvy from "../Nav/Nav.js";
-import House from "../CreateHouse/CreateHouse.js";
-import JoinHouse from "../JoinHouse/JoinHouse.js";
+import House from "../CreateHouse/createHouse.js";
+import JoinHouse from "../JoinHouse/joinHouse.js";
 
 import {
     BrowserRouter as Router,
@@ -28,23 +28,6 @@ class App extends Component {
         }
     }
 
-    submitLogin(a, b) {
-        return new Promise((resolve, reject) => {
-            var url = '/login';
-            axios.post(url, {
-                username: a,
-                password: b,
-            }).then((userObj) => {
-                //console.log(userObj.data.firstName)
-                this.setState({
-                    currentUser: {
-                        firstName: userObj.data.firstName
-                    }
-                });
-                resolve();
-            });
-        });
-    }
   submitLogin(a, b) {
     return new Promise((resolve, reject)=>{
     var url = '/login';
