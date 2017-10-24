@@ -289,30 +289,14 @@ app.put('/join', (req, res, next) => {
         if (err){
           console.log(err)
         } else {
-       
         foundUser.house = house._id
         foundUser.save((err, userReturned) =>{
           if(err){
             next(err)
           } else {
-            res.json('fark' + userReturned)
+            res.json(userReturned)
           }
         })
-    //   console.log(house)
-    //   if (req.body.password === house.password) {
-    //     house.users.push(req.body.user);
-    //     house.save((err, userReturned) => {
-    //       if (err) {
-    //         console.log(err);
-    //         next(err);
-    //       } else {
-    //         res.json('user updated in db' + userReturned.users);
-    //       }
-    //     });
-    //   } else {
-    //     res.json('No password match found in database')
-    //   }
-    // };
   }})
   }})  
 })
@@ -323,30 +307,3 @@ var port = 5000;
 app.listen(port, () => {
   console.log('listening on port ' + port);
 });
-
-
-// app.put('/items/:id', (req, res, next) => {
-  //   Item.findByIdAndUpdate({ _id: req.params.id }, "selector", (err, item) => {
-  //     if (err) {
-  //       console.log(err);
-  //       next(err);
-  //     } else {
-  //       item.selector = req.body.selector;
-  //       item.save((err, itemReturned) => {
-  //         if (err) {
-  //           console.log(err);
-  //           next(err);
-  //         } else {
-  //           Item.find(function (err, item) {
-  //             if (err) {
-  //               console.log(err);
-  //               next(err);
-  //             } else {
-  //               res.json(item);
-  //             }
-  //           });
-  //         }
-  //       });
-  //     };
-  //   })
-  // });

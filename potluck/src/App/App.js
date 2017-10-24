@@ -34,7 +34,6 @@ constructor(){
             username: a,
             password: b,
     }).then((userObj) => {
-      //console.log(userObj.data.firstName)
         this.setState({
           currentUser: {
             firstName: userObj.data.firstName
@@ -46,9 +45,7 @@ constructor(){
   }
   
   render() {
-    console.log(this.state.currentUser)
     return (
-     
         <Router>
            <div>
              <Route path='/' render={()=><Navvy currentUser={this.state.currentUser}/>} />
