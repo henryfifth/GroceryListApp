@@ -1,4 +1,4 @@
-.login{
+.signup{
   background: url('../main-background.jpg'); 
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -11,8 +11,7 @@
   
 }
 
-.login-card {
-  align-content: center;
+.signup-card {
   margin-left: 30%;
   margin-right: 30%;
   width: 40%;
@@ -20,18 +19,17 @@
   padding: 30px;
 }
 
-.login-button{
+.signup-button{
   margin-left: 30%;
   margin-right: 30%;
   width: 40%;
 }
 
-.login-input{
+.signup-input{
   flex-direction: column;
+
 }
 
-.login-title{
-  padding: 50px;
+.signup-title{
+  padding: 5px;
 }
-
- 

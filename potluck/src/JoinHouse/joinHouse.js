@@ -1,6 +1,7 @@
 import React, { Component } from 'react'; 
-import { Button, FormGroup, Label, Input } from 'reactstrap';
+import { Button, FormGroup, Label, Input, Card, CardTitle, CardBody } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
+import './joinHouse.css';
 var axios = require('axios');
 
 
@@ -42,10 +43,18 @@ class JoinHouse extends Component{
             password: this.state.password
           })
     .then((userObj) => {
-      if (userObj.success) { 
+      console.log(userObj);
+      console.log(this.state.password);
+      if (userObj) { 
         this.props.history.push("/main");
       }  else {
-        this.setState({message: userObj.message});
+        this.setState({
+          message: userObj.data.message,
+          joinHouse: '',
+          user: '',
+          password: '',
+
+        });
       }
     }); 
   }
@@ -57,26 +66,29 @@ _handleKeyPress(e){
 }
   render(){ 
     return(
-      <div>
-        <h1 className="mb-3">Join a House</h1>
+      <div className='joinhouse'>
         {this.state.message}
-        <FormGroup>
+        <Card className='joinhouse-card'>
+          <CardBody>
+          <CardTitle className='joinhouse-title'> Join a House List </CardTitle>
+        <FormGroup className='joinhouse-input'>
           <Label for="houseName">Enter House Name</Label>{' '}
           <Input type="text" onChange={this.inputjoinHouse} value={this.state.joinHouse} name="houseName" id="houseName" onKeyPress={this._handleKeyPress}  />
         </FormGroup>
         {' '}
-        <FormGroup>
+        <FormGroup className='joinhouse-input'>
           <Label for="houseName">Enter Username</Label>{' '}
           <Input type="text" onChange={this.inputUser} value={this.state.user} name="houseName" id="houseName" onKeyPress={this._handleKeyPress}  />
         </FormGroup>
         {' '}
-        <FormGroup>
+        <FormGroup className='joinhouse-input'>
           <Label for="password">Password</Label>{' '}
           <Input type="password" onChange={this.inputpasswordChange} value={this.state.password} name="password" id="password" onKeyPress={this._handleKeyPress}  />
         </FormGroup>
         {' '}
-        <Button onClick={this.joinIt} >Submit</Button>
-    
+        <Button className='joinhouse-button' onClick={this.joinIt} >Submit</Button>
+    </CardBody>
+    </Card>
       </div>
     );
   };

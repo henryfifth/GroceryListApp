@@ -1,58 +1,68 @@
-import React, { Component } from 'react'; 
-import { Button, FormGroup, Label, Input } from 'reactstrap';
+import React, { Component } from 'react';
+import { Button, CardSubtitle, FormGroup, Label, Input, Card, CardBody, CardTitle } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
 import './Login.css';
 
-class Login extends Component{
-  constructor(){
+class Login extends Component {
+  constructor() {
     super();
     this.inputemailChange = this.inputemailChange.bind(this);
     this.inputpasswordChange = this.inputpasswordChange.bind(this);
     this.testFunc = this.testFunc.bind(this);
     this._handleKeyPress = this._handleKeyPress.bind(this);
-    this.state = { 
+    this.state = {
       email: '',
-      password: '', 
+      password: '',
       message: ''
     }
   }
   inputemailChange(event) {
-    this.setState({email: event.target.value});
+    this.setState({ email: event.target.value });
   }
   inputpasswordChange(event) {
-    this.setState({password: event.target.value});
+    this.setState({ password: event.target.value });
   }
 
-  testFunc(a, b){
-    this.props.submitLogin(a, b).then(()=>{
-   // setTimeout(function(){
+  testFunc(a, b) {
+    this.props.submitLogin(a, b).then((user) => {
+      console.log
+      if (user.found){
       this.props.history.push("/main");
+      } else {
+          this.setState({
+            message: user.message
+          })
+      }
+    }, (e)=>{
+      console.log(e);
     });
-  //  }, 1000)
   }
 
-_handleKeyPress(e){
-  if(e.key === "Enter"){
-    this.testFunc(this.state.email, this.state.password);
+  _handleKeyPress(e) {
+    if (e.key === "Enter") {
+      this.testFunc(this.state.email, this.state.password);
+    }
   }
-}
-  render(){ 
-    return(
+  render() {
+    return (
       <div className='login'>
-        <h1 className="mb-3">Login</h1>
-        {this.state.message}
-        <FormGroup>
-        <Label for="email">Email</Label>{' '}
-        <Input className='login-input' type="email" onChange={this.inputemailChange} name="email" id="email" placeholder="you@something.com" />
-      </FormGroup>
-        {' '}
-        <FormGroup>
-          <Label for="password">Password</Label>{' '}
-          <Input className='login-input' type="password" onChange={this.inputpasswordChange} value={this.state.password} name="password" id="password" onKeyPress={this._handleKeyPress}  />
-        </FormGroup>
-        {' '}
-        <Button className="login-button" onClick={() => this.testFunc(this.state.email, this.state.password)} >Submit</Button>
-    
+        <Card className='login-card'>
+          <CardTitle >Login</CardTitle>
+          <CardSubtitle style={{color: 'red'}}>{this.state.message}</CardSubtitle>
+          <CardBody>
+            <FormGroup className="login-input">
+              <Label for="email">Email</Label>{' '}
+              <Input className='login-input' type="email" onChange={this.inputemailChange} name="email" id="email" placeholder="you@something.com" />
+            </FormGroup>
+            {' '}
+            <FormGroup className="login-input">
+              <Label for="password">Password</Label>{' '}
+              <Input className='login-input' type="password" onChange={this.inputpasswordChange} value={this.state.password} name="password" id="password" onKeyPress={this._handleKeyPress} />
+            </FormGroup>
+            {' '}
+            <Button className="login-button" onClick={() => this.testFunc(this.state.email, this.state.password)} >Submit</Button>
+          </CardBody>
+        </Card>
       </div>
     );
   };

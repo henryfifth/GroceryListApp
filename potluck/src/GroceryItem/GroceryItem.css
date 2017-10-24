@@ -12,6 +12,7 @@
   margin-right: 25%;
 }
 
-.color{
-  background-color: green !important;
+
+.list-item {
+  mix-blend-mode: normal;
 }

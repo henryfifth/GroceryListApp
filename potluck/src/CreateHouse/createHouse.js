@@ -6,10 +6,13 @@
  * Make it look pretty
  */
 
-import React, { Component } from 'react'; 
-import { Button, FormGroup, Label, Input } from 'reactstrap';
+import React, { Component } from 'react';
+import { Button, FormGroup, Label, Input, Card, CardTitle, CardSubtitle, CardBody } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
-class House extends Component{
+import './createHouse.css';
+var axios = require('axios');
+
+class House extends Component {
   constructor() {
     super();
     this.inputHouseName = this.inputHouseName.bind(this);
@@ -27,76 +30,90 @@ class House extends Component{
     }
   }
   submitCreate(signupObj) {
-    var url = '/create-house';
-    fetch(url, {
-        method: "POST",
-        headers:{"Content-Type":"application/json"}, 
-        body: JSON.stringify(
-          {
-            houseName: signupObj.houseName,
-            password: signupObj.password
-          }
-        )
-      }).then((response)=> { 
-        return response.json();
-      }).then((userObj) => { 
-        if (userObj !== undefined) { 
-          this.setState({
-            message: userObj.message
-          }); 
-          this.props.history.push("/main");
-        }  else {
-          console.log('user add failed');
-        }
-    }); 
-  }
+    axios.post('/create-house', { 
+      houseName: signupObj.houseName,
+      password: signupObj.password}
+    ).then((userObj) => {
+      console.log(userObj);
+      if (userObj !== undefined) {
+        this.setState({
+          message: userObj.data.message
+        });
+      } else {
+        console.log('New List Failed');
+      }
+    });
+  };
+
   handleCreate() {
     if (this.state.password === this.state.confirmPassword) {
-    this.submitCreate({
-      houseName: this.state.houseName,
-      password: this.state.password,
-      roommates: this.state.roommates
-    })
-  } else {
-    alert ('you fucked up')
-  }}
+      this.submitCreate({
+        houseName: this.state.houseName,
+        password: this.state.password,
+        roommates: this.state.roommates
+      })
+      this.setState({
+        houseName: "",
+        password: "",
+        roommates: "",
+        confirmPassword: ''
+      })
+      this.props.history.push("/join-house");
+
+    } else {
+      this.setState({
+        message: "Passwords Don't Match",
+        houseName: '',
+        password: '',
+        roommates: '',
+        confirmPassword: '' 
+      })
+    } 
+
+  }
   inputHouseName(event) {
-    this.setState({houseName: event.target.value});
+    this.setState({ houseName: event.target.value });
   }
 
   inputpasswordChange(event) {
-    this.setState({password: event.target.value});
+    this.setState({ password: event.target.value });
   }
   inviteRoommates(event) {
-    this.setState({roommates: event.target.value});
+    this.setState({ roommates: event.target.value });
   }
   confirmPassword(event) {
-    this.setState({confirmPassword: event.target.value});
+    this.setState({ confirmPassword: event.target.value });
   }
-  render(){ 
-    return(
-      <div>
-        <h1 className="mb-3">Create List</h1>
-        {this.state.message}
-        <FormGroup>
-          <Label for="adress">House Name</Label>{' '}
-          <Input type="text" onChange={this.inputHouseName} value={this.state.adress} name="houseName" id="houseName"  placeholder="1600 Pennsylvania Ave NW"/>
-        </FormGroup>
-        <FormGroup>
-          <Label for="password">Create Password For This List</Label>{' '}
-          <Input type="password" onChange={this.inputpasswordChange} value={this.state.password} name="password" id="password"  placeholder="abc123"  />
-        </FormGroup>
-        <FormGroup>
-          <Label for="zip">Confirm Password</Label>{' '}
-          <Input type="password" onChange={this.confirmPassword} value={this.state.zip} name="confirm" id="confirm"  placeholder=""/>
-        </FormGroup>
-        <FormGroup>
-          <Label for="state">Invite Roommates</Label>{' '}
-          <Input type="text" onChange={this.inviteRoommates} value={this.state.roommates} name="state" id="state"  placeholder="Emails go here, seperated by commas..."/>
-        </FormGroup>
-        {' '}
-        {' '}
-         <Button onClick={this.handleCreate}>Submit</Button> 
+  render() {
+    console.log(this.state);
+    const isEnabled = this.state.password.length > 0;
+    return (
+      <div className="createhouse">
+        <Card className='createhouse-card'>
+          <CardBody>
+            <CardTitle className="createhouse-title">Create House List </CardTitle>
+            <CardSubtitle style={{color:'red'}}>{this.state.message}</CardSubtitle>
+            <FormGroup className='createhouse-input'>
+              <Label for="adress">House Name</Label>{' '}
+              <Input type="text" onChange={this.inputHouseName} value={this.state.houseName} name="houseName" id="houseName" placeholder="1600 Pennsylvania Ave NW" />
+            </FormGroup>
+            <FormGroup className='createhouse-input'>
+              <Label for="password">Create Password For This List</Label>{' '}
+              <Input type="password" onChange={this.inputpasswordChange} value={this.state.password} name="password" id="password" placeholder="abc123" />
+            </FormGroup>
+            <FormGroup className='createhouse-input'>
+              <Label for="zip">Confirm Password</Label>{' '}
+              <Input type="password" onChange={this.confirmPassword} value={this.state.confirmPassword} name="confirm" id="confirm" placeholder="" />
+            </FormGroup>
+            <FormGroup className='createhouse-input'>
+              <Label for="state">Invite Roommates</Label>{' '}
+              <Input type="text" onChange={this.inviteRoommates} value={this.state.roommates} name="state" id="state" placeholder="Emails go here, seperated by commas..." />
+            </FormGroup>
+            {' '}
+            {' '}
+            <Button disabled={!isEnabled} className='createhouse-button' onClick={this.handleCreate}>Submit</Button>
+          </CardBody>
+        </Card>
       </div>
     );
   };

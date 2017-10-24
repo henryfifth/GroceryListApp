@@ -1,4 +1,4 @@
-.login{
+.joinhouse{
   background: url('../main-background.jpg'); 
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -11,8 +11,7 @@
   
 }
 
-.login-card {
-  align-content: center;
+.joinhouse-card {
   margin-left: 30%;
   margin-right: 30%;
   width: 40%;
@@ -20,18 +19,16 @@
   padding: 30px;
 }
 
-.login-button{
+.joinhouse-button{
   margin-left: 30%;
   margin-right: 30%;
   width: 40%;
 }
 
-.login-input{
+.joinhouse-input{
   flex-direction: column;
 }
 
-.login-title{
-  padding: 50px;
+.joinhouse-title{
+  padding: 5px;
 }
-
- 

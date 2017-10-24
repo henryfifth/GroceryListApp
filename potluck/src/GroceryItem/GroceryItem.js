@@ -20,10 +20,10 @@ export default class GroceryItem extends Component {
       return (
         <tr>
           <td><ListGroup>
-              <ListGroupItem className='color' action onClick={() => this.selectorToggle(this.props.item._id)}>
+              <ListGroupItem className="list-item" style={{backgroundColor: this.props.item.color}} action onClick={() => this.selectorToggle(this.props.item._id)}>
              {this.props.item.name}
              </ListGroupItem></ListGroup></td>
-          <td><ListGroup><ListGroupItem className='color'>{this.props.item.quantity}</ListGroupItem></ListGroup></td>
+          <td><ListGroup><ListGroupItem>{this.props.item.quantity}</ListGroupItem></ListGroup></td>
           <td><Button class='delete' onClick={() => this.props.deleteItem(this.props.item._id)} color="danger">X</Button>
           </td>
         </tr>
