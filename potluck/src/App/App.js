@@ -7,60 +7,58 @@ import Navvy from "../Nav/Nav.js";
 import House from "../CreateHouse/createHouse.js";
 import JoinHouse from "../JoinHouse/joinHouse.js";
 import {
-  BrowserRouter as Router,
-  Route,
+    BrowserRouter as Router,
+    Route,
 } from 'react-router-dom';
 var axios = require('axios');
 
 
 class App extends Component {
-constructor(){
-  super();
-  this.submitLogin = this.submitLogin.bind(this)
-  this.state = { 
-    email: "",
-    password: "",
-    message:"",
-    currentUser: {
-      firstName: "",
+    constructor() {
+        super();
+        this.submitLogin = this.submitLogin.bind(this)
+        this.state = {
+            email: "",
+            password: "",
+            message: "",
+            currentUser: {
+                firstName: "",
+            }
+        }
     }
-  }
-}
 
-  submitLogin(a, b) {
-    return new Promise((resolve, reject)=>{
-    var url = '/login';
-      axios.post(url, {
-            username: a,
-            password: b,
-    }).then((userObj) => {
-      //console.log(userObj.data.firstName)
-        this.setState({
-          currentUser: {
-            firstName: userObj.data.firstName
-          }
-          });
-          resolve();
-      });
-    });
-  }
-  
-  render() {
-    console.log(this.state.currentUser)
-    return (
-     
-        <Router>
-           <div>
-             <Route path='/' render={()=><Navvy currentUser={this.state.currentUser}/>} />
-             <Route path='/Login' render={() => <Login submitLogin={this.submitLogin} />}/>
-             <Route path='/Signup' render={()=> <SignUp/>}/> 
-             <Route path='/Main' render={()=> <Main/>}/>
-             <Route path='/House' render={()=> <House/>}/>
-             <Route path='/Join-House' render={()=> <JoinHouse />}/>
-          </div>
-        </Router>
-      
-    )}
+    submitLogin(a, b) {
+        return new Promise((resolve, reject) => {
+            var url = '/login';
+            axios.post(url, {
+                username: a,
+                password: b,
+            }).then((userObj) => {
+                //console.log(userObj.data.firstName)
+                this.setState({
+                    currentUser: {
+                        firstName: userObj.data.firstName
+                    }
+                });
+                resolve();
+            });
+        });
+    }
+
+    render() {
+        return (
+            <Router>
+                <div>
+                    <Route path='/' render={() => <Navvy currentUser={this.state.currentUser} />} />
+                    <Route path='/Login' render={() => <Login submitLogin={this.submitLogin} />} />
+                    <Route path='/Signup' render={() => <SignUp />} />
+                    <Route path='/Main' render={() => <Main />} />
+                    <Route path='/House' render={() => <House />} />
+                    <Route path='/Join-House' render={() => <JoinHouse />} />
+                </div>
+            </Router>
+        )
+    }
 }
 
 export default App;

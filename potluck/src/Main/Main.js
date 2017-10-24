@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import GroceryInputs from '../GroceryInputs/GroceryInputs';
 import './Main.css';
-import { Card, CardTitle } from 'reactstrap';
+// import { Card, CardTitle } from 'reactstrap';
 import GroceryList from "../GroceryList/GroceryList";
 var axios = require('axios');
 
@@ -87,7 +87,6 @@ componentDidMount(){
   }
 
   render(){
-    console.log(this.state)
     if (this.state.initialized === false) {
       return (
         <div className='main'>
