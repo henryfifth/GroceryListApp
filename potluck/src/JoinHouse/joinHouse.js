@@ -1,5 +1,5 @@
 import React, { Component } from 'react'; 
-import { Button, FormGroup, Label, Input, Card, CardTitle, CardBody, Col } from 'reactstrap';
+import { Button, FormGroup, Label, Input, Card, CardTitle, CardBody, CardSubtitle, CardText, Col } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
 import './JoinHouse.css';
 var axios = require('axios');
@@ -36,16 +36,21 @@ class JoinHouse extends Component{
           })
     .then((userObj) => {
       console.log(userObj);
-      console.log(this.state.password);
-      if (userObj) { 
-        this.props.history.push("/main");
+      console.log(this.state);
+      if (userObj.data.message === "House Does Not Match") {
+        this.setState({
+          message: userObj.data.message
+        })  
       }  else {
+        
         this.setState({
           message: userObj.data.message,
           joinHouse: '',
           password: '',
+  
 
         });
+        this.props.history.push("/main");
       }
     }); 
   }
@@ -58,11 +63,14 @@ _handleKeyPress(e){
   render(){ 
     return(
       <div className='joinhouse'>
+
         <Col className='join-col'></Col>
         {this.state.message}
         <Card className='joinhouse-card'>
           <CardBody>
-          <CardTitle className='joinhouse-title'> Join a House List </CardTitle>
+          <CardTitle className='joinhouse-title'> Join a House List </CardTitle>{' '}
+          <CardSubtitle> {this.state.message} </CardSubtitle>{' '}
+          <CardText>Enter your house name, username, and password to begin adding to your shared grocery list </CardText>{' '}
         <FormGroup className='joinhouse-input'>
           <Label for="houseName">Enter House Name</Label>{' '}
           <Input type="text" onChange={this.inputjoinHouse} value={this.state.joinHouse} name="houseName" id="houseName" onKeyPress={this._handleKeyPress}  />
