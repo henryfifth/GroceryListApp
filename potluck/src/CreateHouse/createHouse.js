@@ -7,7 +7,7 @@
  */
 
 import React, { Component } from 'react';
-import { Button, FormGroup, Label, Input, Card, CardTitle, CardSubtitle, CardBody } from 'reactstrap';
+import { Button, FormGroup, Label, Input, Card, CardTitle, CardSubtitle, CardBody, CardText } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
 import './createHouse.css';
 var axios = require('axios');
@@ -91,8 +91,9 @@ class House extends Component {
       <div className="createhouse">
         <Card className='createhouse-card'>
           <CardBody>
-            <CardTitle className="createhouse-title">Create House List </CardTitle>
-            <CardSubtitle style={{color:'red'}}>{this.state.message}</CardSubtitle>
+            <CardTitle className="createhouse-title">Create House List </CardTitle>{' '}
+            <CardSubtitle style={{color:'red'}}>{this.state.message}</CardSubtitle>{' '}
+            <CardText>Create a house for you and your roommates and begin a shared grocery list! Already have a house? Navigate to Join House</CardText>{' '}
             <FormGroup className='createhouse-input'>
               <Label for="adress">House Name</Label>{' '}
               <Input type="text" onChange={this.inputHouseName} value={this.state.houseName} name="houseName" id="houseName" placeholder="1600 Pennsylvania Ave NW" />

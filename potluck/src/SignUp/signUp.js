@@ -69,6 +69,7 @@ class SignUp extends Component {
         password: this.state.password,
         color: this.state.userColor
       })
+      this.props.history.push("/login");
     } else {
       alert('Passwords Do Not Match')
     }
