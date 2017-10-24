@@ -106,6 +106,7 @@ function bob(email){
             to: sean,
             subject: 'Hello ✔',
             text: 'Hello world?',
+            //EDIT THE HTML TO MAKE THE EMAIL LOOK PRETTY
             html: '<b>IT WORKS</b>'
         };
     
