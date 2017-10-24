@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, FormGroup, Label, Input, Card, CardTitle, CardSubtitle, CardBody, CardText, Col } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
-import './CreateHouse.css';
+import './createHouse.css';
 var axios = require('axios');
 
 class House extends Component {
@@ -24,7 +24,9 @@ class House extends Component {
   submitCreate(signupObj) {
     axios.post('/create-house', { 
       houseName: signupObj.houseName,
-      password: signupObj.password}
+      password: signupObj.password,
+      roommates: signupObj.roommates
+    }
     ).then((userObj) => {
       console.log(userObj);
       if (userObj !== undefined) {

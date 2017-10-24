@@ -93,7 +93,7 @@ function john(email) {
 function bob(email) {
     let sean = john(email);
     console.log(sean);
-    if(sean !== ""){
+    if(sean != ""){
         nodemailer.createTestAccount((err, account) => {
 
             let transporter = nodemailer.createTransport({
@@ -292,8 +292,10 @@ app.post("/signup", (req, res, next) => {
             success: true
           })
         }
-    })
-});
+    })}
+  })
+})
+  
 
 app.post('/login', function (req, res, next) {
 
@@ -321,28 +323,35 @@ app.post("/create-house", (req, res, next) => {
     var house = new House();
     house.houseName = req.body.houseName;
     house.password = req.body.password;
-    house.roomates = req.body.roommates;
-    bob(house.roomates);
+    house.roommates = req.body.roommates;
+    // bob(house.roommates);
     User.findOne({
         houseName: house.houseName
     }, (err, foundHouse) => {
         if (err) {
+          console.log(err)
             res.json({
                 found: false,
                 message: err,
                 success: false
             });
         } else {
-
-          res.json({
-            houseReturned: houseReturned,
-            found: true,
-            message: "Congratulations! House List Created Successfully",
-            success: true
-          });
-        }
-    });
-});
+          console.log('or here')
+          house.save((err, houseReturned) => {
+            if (err) {
+              console.log(err);
+              next(err);
+            } else {
+                res.json({
+                  houseReturned: houseReturned,
+                  found: true,
+                  message: "Congratulations! House List Created Successfully",
+                  success: true
+                });
+              }
+            });
+          } 
+        })})
 
 app.get('/user', (req, res, next) => {
 
@@ -385,66 +394,11 @@ app.put('/join', (req, res, next) => {
         })
   }})
   }})  
-})
+});
 
 
 
 var port = 5000;
 app.listen(port, () => {
     console.log('listening on port ' + port);
-});
-  /**
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-                  |
-                 |.|
-                 |.|
-                |\./|
-                |\./|
-.               |\./|               .
- \^.\          |\\.//|          /.^/
-  \--.|\       |\\.//|       /|.--/
-    \--.| \    |\\.//|    / |.--/
-     \---.|\    |\./|    /|.---/
-        \--.|\  |\./|  /|.--/
-           \ .\  |.|  /. /
- _ -_^_^_^_-  \ \\ // /  -_^_^_^_- _
-   - -/_/_/- ^_^/| |\^_^ -\_\_\- -
-             /_ / | \ _\
-                  |
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   */
+})
