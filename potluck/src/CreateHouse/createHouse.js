@@ -36,7 +36,6 @@ class House extends Component {
       }
     });
   };
-
   handleCreate() {
     if (this.state.password === this.state.confirmPassword) {
       this.submitCreate({
