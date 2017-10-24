@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, CardSubtitle, FormGroup, Label, Input, Card, CardBody, CardTitle } from 'reactstrap';
+import { Col, Button, CardSubtitle, FormGroup, Label, Input, Card, CardBody, CardTitle } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
 import './Login.css';
 
@@ -25,7 +25,6 @@ class Login extends Component {
 
   testFunc(a, b) {
     this.props.submitLogin(a, b).then((user) => {
-      console.log
       if (user.found){
       this.props.history.push("/main");
       } else {
@@ -46,8 +45,9 @@ class Login extends Component {
   render() {
     return (
       <div className='login'>
+        <Col className='space'></Col>
         <Card className='login-card'>
-          <CardTitle >Login</CardTitle>
+          <CardTitle className='login-title'>Login</CardTitle>
           <CardSubtitle style={{color: 'red'}}>{this.state.message}</CardSubtitle>
           <CardBody>
             <FormGroup className="login-input">

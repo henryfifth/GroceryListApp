@@ -1,15 +1,7 @@
-/**
- * TODO
- * Make "Create House" page only available when logged in.
- * Figure out how to add users to house or vice versa
- * Add all the shit
- * Make it look pretty
- */
-
 import React, { Component } from 'react';
-import { Button, FormGroup, Label, Input, Card, CardTitle, CardSubtitle, CardBody, CardText } from 'reactstrap';
+import { Button, FormGroup, Label, Input, Card, CardTitle, CardSubtitle, CardBody, CardText, Col } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
-import './createHouse.css';
+import './CreateHouse.css';
 var axios = require('axios');
 
 class House extends Component {
@@ -89,6 +81,7 @@ class House extends Component {
     const isEnabled = this.state.password.length > 0;
     return (
       <div className="createhouse">
+        <Col className='create-col'></Col>
         <Card className='createhouse-card'>
           <CardBody>
             <CardTitle className="createhouse-title">Create House List </CardTitle>{' '}

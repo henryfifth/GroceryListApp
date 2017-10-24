@@ -1,16 +1,3 @@
-.login{
-  background: url('../main-background.jpg'); 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  height: 100vh;
-  width: 100%;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  
-}
-
 .login-card {
   align-content: center;
   margin-left: 30%;
@@ -31,7 +18,11 @@
 }
 
 .login-title{
-  padding: 50px;
+  text-align: center;
+}
+
+.space{
+  margin-top: 9%;
 }
 
  
