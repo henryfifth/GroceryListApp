@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardTitle, CardSubtitle, CardBody, CardText, } from 'reactstrap';
+import { Card, CardTitle, CardSubtitle, CardBody, CardText, Col } from 'reactstrap';
 import GroceryInputs from '../GroceryInputs/GroceryInputs';
 import './Main.css';
 import GroceryList from "../GroceryList/GroceryList";
@@ -89,13 +89,11 @@ componentDidMount(){
     if (this.state.initialized === false) {
       return (
         <div className='main'>
+        <Col className='main-col'></Col>
         <Card className='main-card'>
-          
           <CardTitle>Welcome to Potluck!</CardTitle>{' '}
           <CardSubtitle>Create a shared grocery list with your housemates.</CardSubtitle>{' '}
           <CardBody> First, create a house for everyone to join. Already have a house? Navigate to Join House</CardBody>{' '}
-          
-           
         </Card>
         </div>
         )}
