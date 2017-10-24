@@ -20,7 +20,7 @@ export default class Navvy extends Component {
     if (this.props.currentUser.firstName !== "") {
       return(
       <div id="navvy">
-      <Navbar color="success" light expand="md">
+      <Navbar light expand="md">
         <NavbarBrand href="/main">Potluck</NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>
@@ -41,7 +41,7 @@ export default class Navvy extends Component {
       )} else {
     return(                                                                                   
     <div id="navvy">
-        <Navbar color="success" light expand="md">
+        <Navbar light expand="md">
           <NavbarBrand href="/main">Potluck</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>

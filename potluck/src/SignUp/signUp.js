@@ -1,17 +1,22 @@
-import React, { Component } from 'react'; 
-import { Button, FormGroup, Label, Input } from 'reactstrap';
+import React, { Component } from 'react';
+import { Button, Col, CardSubtitle, FormGroup, Label, Input, Card, CardBody, CardTitle } from 'reactstrap';
+import { CirclePicker } from 'react-color';
 import { withRouter } from 'react-router-dom';
+import './SignUp.css';
+import 'react-color-picker/index.css'
+import ReactPasswordStrength from 'react-password-strength';
 var axios = require('axios');
 
 
-class SignUp extends Component{
+
+class SignUp extends Component {
   constructor() {
     super();
     this.inputfirstNameChange = this.inputfirstNameChange.bind(this);
     this.inputlastNameChange = this.inputlastNameChange.bind(this);
     this.inputemailChange = this.inputemailChange.bind(this);
-    this.inputpasswordChange = this.inputpasswordChange.bind(this);
     this.handleSignup = this.handleSignup.bind(this);
+    this.changeCallback = this.changeCallback.bind(this);
     this.confirmPassword = this.confirmPassword.bind(this);
     this.submitSignup = this.submitSignup.bind(this);
     this._handleKeyPress = this._handleKeyPress.bind(this);
@@ -21,94 +26,124 @@ class SignUp extends Component{
       email: '',
       password: '',
       confirmPassword: '',
-      message: ''
+      message: '',
+      userColor: ''
     }
   }
+
+  handleChangeComplete = (color) => {
+    this.setState({ userColor: color.hex });
+  };
+
   submitSignup(signupObj) {
-    return new Promise((resolve, reject)=>{      
-    axios.post('/signup', {
-            firstName: signupObj.firstName,
-            lastName: signupObj.lastName,
-            email: signupObj.email,
-            password: signupObj.password
-          }
-      ).then((userObj) => { 
-        if (userObj !== undefined) { 
+    return new Promise((resolve, reject) => {
+      axios.post('/signup', {
+        firstName: signupObj.firstName,
+        lastName: signupObj.lastName,
+        email: signupObj.email,
+        password: signupObj.password,
+        color: signupObj.color
+      }
+      ).then((userObj) => {
+        console.log(userObj)
           this.setState({
-            firstName: userObj.firstName,
-            message: userObj.message,
-            lastName: userObj.lastName
-          })
-          resolve();
-        }  else {
-          console.log('Undefined');
+            firstName: '',
+            lastName: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+            message: userObj.data.message,
+            userColor: ''
+            
+          })        
+          resolve();          
         }
-    });
-  })
-}
+    )})
+    }
+
+
   handleSignup() {
-    if (this.state.password === this.state.confirmPassword) {      
-    this.submitSignup({
-      firstName: this.state.firstName,      
-      lastName: this.state.lastName,
-      email: this.state.email,
-      password: this.state.password
-    })
-  } else {
-    alert ('Passwords Do Not Match')
-  }}
+    if (this.state.password === this.state.confirmPassword) {
+      this.submitSignup({
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        email: this.state.email,
+        password: this.state.password,
+        color: this.state.userColor
+      })
+    } else {
+        this.setState({
+          message: 'Passwords do not match'
+        })
+    }
+  }
   inputfirstNameChange(event) {
-    this.setState({firstName: event.target.value});
+    this.setState({ firstName: event.target.value });
   }
   inputlastNameChange(event) {
-    this.setState({lastName: event.target.value});
+    this.setState({ lastName: event.target.value });
   }
   inputemailChange(event) {
-    this.setState({email: event.target.value});
+    this.setState({ email: event.target.value });
   }
-  inputpasswordChange(event) {
-    this.setState({password: event.target.value});
+  changeCallback(event) {    this.setState({ password: event.password });
   }
   confirmPassword(event) {
-    this.setState({confirmPassword: event.target.value});
+    this.setState({ confirmPassword: event.target.value });
   }
 
-  _handleKeyPress(e){
-    if(e.key === "Enter"){
+  _handleKeyPress(e) {
+    if (e.key === "Enter") {
       this.handleSignup();
     }
   }
-  render(){ 
-    console.log(this.props.history)
-    return(
-      <div>
-        <h1>Signup</h1>
-        {this.state.message}
-        <FormGroup>
-          <Label for="firstName">First Name</Label>{' '}
-          <Input type="text" onChange={this.inputfirstNameChange} value={this.state.firstName} name="firstName" id="firstName"  placeholder="John"/>
-        </FormGroup>
-        <FormGroup>
-          <Label for="lastName">Last Name</Label>{' '}
-          <Input type="text" onChange={this.inputlastNameChange} value={this.state.lastName} name="lastName" id="lastName"  placeholder="Doe"/>
-        </FormGroup>
-        <FormGroup>
-        <Label for="email">Email</Label>{' '}
-        <Input type="email" onChange={this.inputemailChange} value={this.state.email} name="email" id="email" placeholder="you@something.com" />
-      </FormGroup>
-        {' '}
-        <FormGroup>
-          <Label for="password">Password</Label>{' '}
-          <Input type="password" onChange={this.inputpasswordChange} value={this.state.password} name="password" id="password"  placeholder="abc123"  onKeyPress={this._handleKeyPress}/>
-        </FormGroup>
-        <FormGroup>
-          <Label for="password">Confirm Password</Label>{' '}
-          <Input type="password" onChange={this.confirmPassword} value={this.state.confirmPassword} name="password" id="password"  placeholder="abc123"  onKeyPress={this._handleKeyPress}/>
-        </FormGroup>
-        {' '}
-         <Button onClick={this.handleSignup}>Submit</Button> 
+
+  render() {
+    return (
+      <div className="signup">
+       <Col className='signup-col'></Col>   
+        <Card className="signup-card">
+          <CardBody>
+            <CardTitle className="signup-title"> Sign Up</CardTitle>
+              <FormGroup className="signup-input">
+                <Label for="firstName">First Name:</Label>{' '}
+                <Input type="text" onChange={this.inputfirstNameChange} value={this.state.firstName} name="firstName" id="firstName" placeholder="John" />
+              </FormGroup>
+              <FormGroup className="signup-input">
+                <Label for="lastName">Last Name:</Label>{' '}
+                <Input type="text" onChange={this.inputlastNameChange} value={this.state.lastName} name="lastName" id="lastName" placeholder="Doe" />
+              </FormGroup>
+              <FormGroup className="signup-input">
+                <Label for="email">Email:</Label>{' '}
+                <Input type="email" onChange={this.inputemailChange} value={this.state.email} name="email" id="email" placeholder="you@something.com" />
+              </FormGroup>
+              {' '}
+              <FormGroup className="signup-input"> 
+              <Label for="password">Password:</Label>{' '}
+              <ReactPasswordStrength 
+                value = {this.state.password}
+                changeCallback={this.changeCallback}
+                minLength={5}
+                minScore={2}
+                scoreWords={['weak', 'okay', 'good', 'strong', 'stronger']}
+                inputProps={{ placeholder: "abc123", autoComplete: "off", className: "form-control" }}
+              />
+              </FormGroup>
+              <FormGroup className="signup-input">
+                <Label for="password">Confirm Password:</Label>{' '}
+                <Input type="password" onChange={this.confirmPassword} value={this.state.confirmPassword} name="password" id="password" placeholder="abc123" onKeyPress={this._handleKeyPress} />
+              </FormGroup>
+              <Label>Select a color for this user:</Label>
+              <CirclePicker 
+              color={ this.state.userColor }
+              onChangeComplete={ this.handleChangeComplete }/>
+              {' '}
+              <CardSubtitle style={{color:'red'}}>{this.state.message}</CardSubtitle><br/>
+              <Button className="signup-button" onClick={this.handleSignup}>Submit</Button> 
+         </CardBody>
+         </Card>
       </div>
-    );
+        );
   };
 }
 

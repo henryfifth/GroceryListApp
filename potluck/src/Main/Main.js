@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import GroceryInputs from '../GroceryInputs/GroceryInputs';
 import './Main.css';
-import { Card, CardTitle } from 'reactstrap';
 import GroceryList from "../GroceryList/GroceryList";
 var axios = require('axios');
 
@@ -48,7 +47,10 @@ deleteItem(id) {
 };
 
 selectorToServer(id, toggleValue) {
-  axios.put('/selector/', {_id: id, selector: toggleValue}, {headers: { 'Content-Type': 'application/json' }}
+  axios.put('/selector/', {
+    
+    _id: id, selector: toggleValue
+  }, {headers: { 'Content-Type': 'application/json' }}
 ).then((data) => {
   this.setState({
     items: data.data

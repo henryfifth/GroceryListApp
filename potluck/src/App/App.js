@@ -6,6 +6,7 @@ import Login from "../Login/Login";
 import Navvy from "../Nav/Nav.js";
 import House from "../CreateHouse/CreateHouse.js";
 import JoinHouse from "../JoinHouse/JoinHouse.js";
+
 import {
   BrowserRouter as Router,
   Route,
@@ -33,13 +34,11 @@ constructor(){
       axios.post(url, {
             username: a,
             password: b,
-    }).then((userObj) => {
+    }).then((res) => {
         this.setState({
-          currentUser: {
-            firstName: userObj.data.firstName
-          }
+          currentUser: res.data
           });
-          resolve();
+          resolve(res.data);
       });
     });
   }
@@ -47,7 +46,7 @@ constructor(){
   render() {
     return (
         <Router>
-           <div>
+           <div className='bg'>
              <Route path='/' render={()=><Navvy currentUser={this.state.currentUser}/>} />
              <Route path='/Login' render={() => <Login submitLogin={this.submitLogin} />}/>
              <Route path='/Signup' render={()=> <SignUp/>}/> 

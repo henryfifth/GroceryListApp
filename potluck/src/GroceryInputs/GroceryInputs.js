@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, InputGroup, InputGroupButton } from 'reactstrap';
+import { Input, InputGroup, InputGroupButton, Col } from 'reactstrap';
 import './GroceryInputs.css';
 
 export default class List extends Component {
@@ -46,10 +46,11 @@ export default class List extends Component {
     }
   }
   render() {
-    const isEnabled = this.state.input.length > 0;
+    const isEnabled = this.state.input.length > 0
     return (
       <div className='grocery-inputs'>
-        <InputGroup className='mufu'>
+        <Col className='input-col'></Col>
+        <InputGroup>
           <Input value={this.state.input} onChange={this.updateInput} onKeyPress={this._handleKeyPress} placeholder="New item..." />
           <Input type='number' value={this.state.quantity} onChange={this.updateQuantity} onKeyPress={this._handleKeyPress} placeholder="Quantity..." />
           <InputGroupButton disabled={!isEnabled} color="primary" onClick={this.addToList} >Add Item</InputGroupButton>
