@@ -11,7 +11,7 @@ class JoinHouse extends Component{
     this.inputjoinHouse = this.inputjoinHouse.bind(this);
     this.inputemailChange = this.inputemailChange.bind(this);
     this.inputpasswordChange = this.inputpasswordChange.bind(this);
-    this.joinIt = this.joinIt.bind(this);
+    this.joint = this.joint.bind(this);
     this._handleKeyPress = this._handleKeyPress.bind(this);
     this.state = { 
       joinHouse: '',
@@ -29,7 +29,7 @@ class JoinHouse extends Component{
   inputpasswordChange(event) {
     this.setState({password: event.target.value});
   }
-  joinIt() {
+  joint() {
     axios.put('/join', {
             joinHouse: this.state.joinHouse,
             password: this.state.password
@@ -57,7 +57,7 @@ class JoinHouse extends Component{
 
 _handleKeyPress(e){
   if(e.key === "Enter"){
-    this.joinIt();
+    this.joint();
   }
 }
   render(){ 
@@ -76,11 +76,18 @@ _handleKeyPress(e){
           <Input type="text" onChange={this.inputjoinHouse} value={this.state.joinHouse} name="houseName" id="houseName" onKeyPress={this._handleKeyPress}  />
         </FormGroup>
         {' '}
-        <FormGroup className='joinhouse-input'>
+
+        <FormGroup>
+          <Label for="houseName">Enter Email</Label>{' '}
+          <Input type="text" onChange={this.inputUser} value={this.state.user} name="houseName" id="houseName" onKeyPress={this._handleKeyPress}  />
+        </FormGroup>
+        {' '}
+        <FormGroup>
           <Label for="password">Password</Label>{' '}
           <Input type="password" onChange={this.inputpasswordChange} value={this.state.password} name="password" id="password" onKeyPress={this._handleKeyPress}  />
         </FormGroup>
         {' '}
+
         <Button className='joinhouse-button' onClick={this.joinIt} >Submit</Button>
     </CardBody>
     </Card>
