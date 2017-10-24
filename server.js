@@ -107,7 +107,6 @@ app.get('/houses', function (req, res, next) {
 });
 
 app.put('/selector', (req, res, next) => {
-  //console.log(req.user)
   House.findByIdAndUpdate({ _id: req.user.house }, "items", (err, house) => {
     house.items.forEach(function (e, i) {
       if (e._id == req.body._id) {
