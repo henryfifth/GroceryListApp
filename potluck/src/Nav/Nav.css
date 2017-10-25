@@ -1,3 +1,6 @@
 #navvy{
-  background-color: rgb(202, 172, 23);
+  padding-top: 2%;
+  background-color: rgb(202, 172, 23, 0.0);
+  color: rgb(255, 255, 255, 1) !important;
+  font-size: 18px;
 }

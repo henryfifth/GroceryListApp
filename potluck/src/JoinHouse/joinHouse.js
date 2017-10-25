@@ -10,7 +10,7 @@ class JoinHouse extends Component{
     super();
     this.inputjoinHouse = this.inputjoinHouse.bind(this);
     this.inputpasswordChange = this.inputpasswordChange.bind(this);
-    this.joint = this.joint.bind(this);
+    this.joinIt = this.joinIt.bind(this);
     this._handleKeyPress = this._handleKeyPress.bind(this);
     this.state = { 
       joinHouse: '',
@@ -31,11 +31,17 @@ class JoinHouse extends Component{
             password: this.state.password
           })
     .then((userObj) => {
-      if (userObj.data.message === "House Does Not Match") {
+      console.log(userObj)
+      if (userObj.data.message == "House Does Not Match") {
         this.setState({
           message: userObj.data.message
         })  
-      }  else {
+      } else if (userObj.data.message == "Something went wrong! Try again.") {
+        this.setState({
+          message: userObj.data.message
+        })  
+      }  
+      else {
         this.setState({
           message: userObj.data.message,
           joinHouse: '',
@@ -54,13 +60,10 @@ _handleKeyPress(e){
   render(){ 
     return(
       <div className='joinhouse'>
-
         <Col className='join-col'></Col>
-        {this.state.message}
         <Card className='joinhouse-card'>
           <CardBody>
           <CardTitle className='joinhouse-title'> Join a House List </CardTitle>{' '}
-          <CardSubtitle> {this.state.message} </CardSubtitle>{' '}
           <CardText>Enter your house name, username, and password to begin adding to your shared grocery list </CardText>{' '}
         <FormGroup className='joinhouse-input'>
           <Label for="houseName">Enter House Name</Label>{' '}
@@ -73,6 +76,7 @@ _handleKeyPress(e){
         </FormGroup>
         {' '}
         <Button className='joinhouse-button' onClick={this.joinIt} >Submit</Button>
+        <CardSubtitle className='error' style={{color:'red'}}> {this.state.message} </CardSubtitle>{' '}
     </CardBody>
     </Card>
       </div>

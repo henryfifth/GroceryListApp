@@ -23,3 +23,8 @@
 .join-col{
   margin-top: 5%;
 }
+
+.error{
+  margin-top: 5% !important;
+  text-align: center;
+}
