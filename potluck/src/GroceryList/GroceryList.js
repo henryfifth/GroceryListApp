@@ -14,7 +14,6 @@ sortFunc(array){
   }  
   
   render(){
-    console.log(this.props)
 
     let sortedBySelector = this.sortFunc(this.props.items)
     let newList = sortedBySelector.map((item, i)=>{
@@ -22,7 +21,7 @@ sortFunc(array){
 
     })
     return(                                                                                   
-    <div class='list-group'>
+    <div className='list-group'>
       <Table >
         <tbody >
         {newList}

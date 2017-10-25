@@ -15,7 +15,6 @@ export default class GroceryItem extends Component {
   }
 
   render() { 
-    console.log(this.props);
     if (this.props.item.selector === true) {
       return (
         <tr>
@@ -37,6 +36,7 @@ export default class GroceryItem extends Component {
              {this.props.item.name}
              </ListGroupItem></ListGroup></td>
           <td><ListGroup><ListGroupItem>{this.props.item.quantity}</ListGroupItem></ListGroup></td>
+          {/* WHY does class='delete' work, but className='delete' (proper syntax) does not work?!?!?! */}
           <td><Button class='delete' onClick={() => this.props.deleteItem(this.props.item._id)} color="danger">X</Button>
           </td>
         </tr>

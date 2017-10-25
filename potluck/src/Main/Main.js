@@ -23,7 +23,6 @@ sendData(foodObj) {
       name: foodObj.name,
       quantity: foodObj.quantity,
   }, {headers: { 'Content-Type': 'application/json' }}).then((data)=>{
-    console.log(data)
     this.setState({
       items: data.data
     });
@@ -37,12 +36,10 @@ getUser() {
 
 
 deleteItem(id) {
-  console.log(id)
   axios.put('/delete', {
     _id: id
   })
   .then((data) => {
-    console.log(data)
     this.setState({
       items: data.data
     });
@@ -52,7 +49,6 @@ deleteItem(id) {
 selectorToServer(id, toggleValue) {
   axios.put('/selector/', {_id: id, selector: toggleValue}, {headers: { 'Content-Type': 'application/json' }}
 ).then((data) => {
-  console.log(data)
   this.setState({
     items: data.data
   });
@@ -67,7 +63,6 @@ getList(){
   }
   axios.get('/houses')
   .then((data)=>{
-    console.log(data)
     this.setState({
       items:data.data,
       initialized: true
