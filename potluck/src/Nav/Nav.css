@@ -4,3 +4,7 @@
   color: rgb(255, 255, 255, 1) !important;
   font-size: 18px;
 }
+
+.nav-brand{
+  margin-left: 2%;
+}
