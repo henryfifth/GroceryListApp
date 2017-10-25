@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
-import Main from '../Main/main';
+import Main from '../Main/Main';
 import SignUp from "../SignUp/signUp";
 import Login from "../Login/login";
-import Navvy from "../Nav/nav.js";
+import Navvy from "../Nav/Nav.js";
 import House from "../CreateHouse/createHouse.js";
 import JoinHouse from "../JoinHouse/joinHouse.js";
 import {
