@@ -153,7 +153,6 @@ app.post('/items', function (req, res, next) {
 });
 
 app.get('/houses', function (req, res, next) {
-
   if (req.user) {
     House.findById(req.user.house, (err, item) => {
       if (err) {
@@ -350,7 +349,6 @@ app.post("/create-house", (req, res, next) => {
 
 
 app.get('/user', (req, res, next) => {
-
   User.findById(req.user._id, (err, foundUser) => {
     if (err) {
       console.log(err)
@@ -364,24 +362,17 @@ app.get('/user', (req, res, next) => {
 app.put('/join', (req, res, next) => {
   console.log(req.body)
   House.findOne({ "houseName": req.body.joinHouse }, "password users", (err, house) => {
-    console.log(house.password)
-    console.log(req.body.password)
     if (err) {
-      console.log(null);
-      next(err);
-    } else if (house.password != req.body.password) {
-      res.json({message: 'Something went wrong! Please try again.'})
-    }
-    else if (!house) {
-      res.json({ message: "House Does Not Match" });
-    }
+      next(err)
+    } else if (!house || (house.password != req.body.password)) {
+      res.json({ message: "Something went wrong! Please try again." });
+    } 
     else if (house.password == req.body.password) {
-      User.findById(req.user._id, (er, foundUser) => {
+      User.findById(req.user._id, (err, foundUser) => {
         if (err) {
           console.log(err)
-          res.json({ message: "user not found" })
+          res.json({ message: "User not found" })
         } else {
-
           foundUser.house = house._id
           foundUser.save((err, userReturned) => {
             if (err) {

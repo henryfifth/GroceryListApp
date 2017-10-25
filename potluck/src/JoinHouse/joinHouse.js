@@ -32,15 +32,11 @@ class JoinHouse extends Component{
           })
     .then((userObj) => {
       console.log(userObj)
-      if (userObj.data.message == "House Does Not Match") {
+      if (userObj.data.message == "Something went wrong! Please try again.") {
         this.setState({
           message: userObj.data.message
         })  
-      } else if (userObj.data.message == "Something went wrong! Try again.") {
-        this.setState({
-          message: userObj.data.message
-        })  
-      }  
+      }
       else {
         this.setState({
           message: userObj.data.message,
