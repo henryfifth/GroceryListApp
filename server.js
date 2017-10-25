@@ -36,14 +36,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static('public'));
 
-passport.use(new LocalStrategy({ username: "email", password: "password" }, function (email, password, done) {
-
+passport.use(new LocalStrategy({ username: "email", password: "password" },  (email, password, done) => {
   User.findOne({
     email: email
   }, (err, foundUser) => {
     if (err) {
       console.log(err);
-      return done(err, null)
+      next(err);
+    } else if (foundUser == null){
+      return done('Something went wrong! Please try again', null)
     } else {
       if (passwordHash.verify(password, foundUser.password)) {
         return done(null, foundUser);
@@ -298,6 +299,7 @@ app.post('/login', function (req, res, next) {
       req.logIn(user, (err) => {
         if (err) {
           console.log(err);
+          next(err);
           res.json({ found: true, success: false, message: err })
         } else {
           res.json({ found: true, success: true, firstName: user.firstName, lastName: user.lastName })

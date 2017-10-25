@@ -93,7 +93,7 @@ componentDidMount(){
         <Card className='main-card'>
           <CardTitle>Welcome to Potluck!</CardTitle>{' '}
           <CardSubtitle>Create a shared grocery list with your housemates.</CardSubtitle>{' '}
-          <CardBody> First, create a house for everyone to join. Already have a house? Navigate to Join House</CardBody>{' '}
+          <CardBody> First, create a house for everyone to join. Already received an invite? Click the Join House link on the navbar.</CardBody>{' '}
         </Card>
         </div>
         )}

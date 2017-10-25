@@ -28,19 +28,18 @@ class Navvy extends Component {
 
   render(){
     console.log(this.props)
-
     if (sessionStorage.getItem('name') != "") {
       let name = sessionStorage.getItem("name");    
       return(
       <div id="navvy">
       <Navbar light expand="md">
         <NavbarBrand href="/main">Potluck</NavbarBrand>
+        <NavItem>
+              Hello, {name}!
+            </NavItem>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>
           <Nav className="ml-auto" navbar>
-            <NavItem>
-              Hello, {name}
-            </NavItem>
             <NavItem>
               <NavLink href="/house" >Create House</NavLink>
             </NavItem>

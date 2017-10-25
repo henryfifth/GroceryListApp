@@ -87,7 +87,7 @@ class House extends Component {
           <CardBody>
             <CardTitle className="createhouse-title">Create House List </CardTitle>{' '}
             <CardSubtitle style={{color:'red'}}>{this.state.message}</CardSubtitle>{' '}
-            <CardText>Create a house for you and your roommates and begin a shared grocery list! Already have a house? Navigate to Join House</CardText>{' '}
+            <CardText>Create a house for you and your roommates and begin a shared grocery list! Already receive an invite? Click the Join House link on the navbar.</CardText>{' '}
             <FormGroup className='createhouse-input'>
               <Label for="adress">House Name</Label>{' '}
               <Input type="text" onChange={this.inputHouseName} value={this.state.houseName} name="houseName" id="houseName" placeholder="1600 Pennsylvania Ave NW" />
