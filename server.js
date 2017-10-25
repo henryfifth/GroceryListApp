@@ -369,7 +369,7 @@ app.get('/user', (req, res, next) => {
 });
 
 app.put('/join', (req, res, next) => {
-  console.log(req.body)
+  console.log(req.user)
   House.findOne({ "houseName": req.body.joinHouse }, "password users", (err, house) => {
     if (err) {
       next(err)
@@ -377,6 +377,7 @@ app.put('/join', (req, res, next) => {
       res.json({ message: "Something went wrong! Please try again." });
     } 
     else if (house.password == req.body.password) {
+      console.log(req.user)
       User.findById(req.user._id, (err, foundUser) => {
         if (err) {
           console.log(err)

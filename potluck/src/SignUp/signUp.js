@@ -135,7 +135,7 @@ class SignUp extends Component {
                 <Input type="password" onChange={this.confirmPassword} value={this.state.confirmPassword} name="password" id="password" placeholder="abc123" onKeyPress={this._handleKeyPress} />
               </FormGroup>
               <Label>Select a color for this user:</Label>
-              <CirclePicker 
+              <CirclePicker className='color-picker'
               color={ this.state.userColor }
               onChangeComplete={ this.handleChangeComplete }/>
               {' '}

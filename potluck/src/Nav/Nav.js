@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Collapse, Button, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import { Image, Collapse, Button, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 import './Nav.css'
 
 
@@ -33,7 +33,7 @@ class Navvy extends Component {
       return(
       <div id="navvy">
       <Navbar light expand="md">
-        <NavbarBrand href="/main">Potluck</NavbarBrand>
+        <NavbarBrand href="/main"><img src='./images/1.png'/></NavbarBrand>
         <NavItem>
               Hello, {name}!
             </NavItem>
@@ -57,7 +57,7 @@ class Navvy extends Component {
     return(                                                                                   
     <div id="navvy">
         <Navbar light expand="md">
-          <NavbarBrand href="/main">Potluck</NavbarBrand>
+          <NavbarBrand className='nav-brand' href="/main"><img src='./images/1.png'/></NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>

@@ -60,7 +60,7 @@ _handleKeyPress(e){
         <Card className='joinhouse-card'>
           <CardBody>
           <CardTitle className='joinhouse-title'> Join a House List </CardTitle>{' '}
-          <CardText>Enter your house name, username, and password to begin adding to your shared grocery list </CardText>{' '}
+          <CardText>Enter your house name and password to associate a list with your account. </CardText>{' '}
         <FormGroup className='joinhouse-input'>
           <Label for="houseName">Enter House Name</Label>{' '}
           <Input type="text" onChange={this.inputjoinHouse} value={this.state.joinHouse} name="houseName" id="houseName" onKeyPress={this._handleKeyPress}  />

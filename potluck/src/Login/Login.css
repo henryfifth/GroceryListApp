@@ -5,6 +5,7 @@
   width: 40%;
   display: flex;
   padding: 30px;
+  font-family: white, Arial, Helvetica, sans-serif !important
 }
 
 .login-button{
