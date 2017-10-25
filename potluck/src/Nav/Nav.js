@@ -33,7 +33,7 @@ class Navvy extends Component {
       return(
       <div id="navvy">
       <Navbar light expand="md">
-        <NavbarBrand href="/main"><img src='./images/1.png'/></NavbarBrand>
+        <NavbarBrand className='nav-brand' href="/main"><img src='./images/1.png'/></NavbarBrand>
         <NavItem>
               Hello, {name}!
             </NavItem>
