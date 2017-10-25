@@ -12,15 +12,15 @@ import {
 } from 'react-router-dom';
 var axios = require('axios');
 
-
 class App extends Component {
     constructor() {
         super();
-        this.submitLogin = this.submitLogin.bind(this)
+        this.submitLogin = this.submitLogin.bind(this);
         this.state = {
             email: "",
             password: "",
             message: "",
+            bool: false,
             currentUser: {
                 firstName: "",
             }
@@ -34,12 +34,12 @@ class App extends Component {
                 username: a,
                 password: b,
             }).then((userObj) => {
-                //console.log(userObj.data.firstName)
                 this.setState({
                     currentUser: {
                         firstName: userObj.data.firstName
                     }
                 });
+                sessionStorage.setItem('name', this.state.currentUser.firstName);
                 resolve();
             });
         });
