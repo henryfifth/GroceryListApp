@@ -1,7 +1,7 @@
 import React, { Component } from 'react'; 
 import { Button, FormGroup, Label, Input, Card, CardTitle, CardBody, CardSubtitle, CardText, Col } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
-import './JoinHouse.css';
+import './joinHouse.css';
 var axios = require('axios');
 
 

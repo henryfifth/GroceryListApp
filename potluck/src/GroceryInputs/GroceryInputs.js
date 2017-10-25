@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Input, InputGroup, InputGroupButton, Col } from 'reactstrap';
-import './GroceryInputs.css';
+import './groceryInputs.css';
 
 export default class List extends Component {
   constructor() {

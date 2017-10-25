@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Table } from 'reactstrap';
-import GroceryItem from '../GroceryItem/GroceryItem';
-import './GroceryList.css';
+import GroceryItem from '../GroceryItem/groceryItem';
+import './groceryList.css';
 import {withRouter} from "react-router-dom";
 
 class GroceryList extends Component {
