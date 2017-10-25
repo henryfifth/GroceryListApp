@@ -1,19 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
 import Main from '../Main/Main';
-<<<<<<< HEAD
 import SignUp from "../SignUp/SignUp";
 import Login from "../Login/Login";
 import Navvy from "../Nav/Nav.js";
 import House from "../CreateHouse/CreateHouse.js";
 import JoinHouse from "../JoinHouse/JoinHouse.js";
-=======
-import SignUp from "../SignUp/signUp";
-import Login from "../Login/login";
-import Navvy from "../Nav/Nav.js";
-import House from "../CreateHouse/createHouse.js";
-import JoinHouse from "../JoinHouse/joinHouse.js";
->>>>>>> 85761774f85bf4fab4a09de672fbe11f122af7dd
 import {
     BrowserRouter as Router,
     Route,
