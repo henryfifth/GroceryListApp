@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Col, CardSubtitle, FormGroup, Label, Input, Card, CardBody, CardTitle } from 'reactstrap';
 import { CirclePicker } from 'react-color';
 import { withRouter } from 'react-router-dom';
-import './signUp.css';
+import './SignUp.css';
 import 'react-color-picker/index.css'
 import ReactPasswordStrength from 'react-password-strength';
 var axios = require('axios');

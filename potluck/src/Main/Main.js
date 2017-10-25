@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Card, CardTitle, CardSubtitle, CardBody, Col } from 'reactstrap';
-import GroceryInputs from '../GroceryInputs/groceryInputs';
-import './main.css';
-import GroceryList from "../GroceryList/groceryList";
+import GroceryInputs from '../GroceryInputs/GroceryInputs';
+import './Main.css';
+import GroceryList from "../GroceryList/GroceryList";
 var axios = require('axios');
 
 export default class Main extends Component {

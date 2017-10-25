@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Image, Collapse, Button, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
-import './nav.css'
+import './Nav.css'
 
 
 class Navvy extends Component {

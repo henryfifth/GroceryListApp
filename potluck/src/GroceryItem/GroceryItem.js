@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, ListGroupItem, ListGroup } from 'reactstrap';
-import './groceryItem.css';
+import './GroceryItem.css';
 
 export default class GroceryItem extends Component {
   constructor() {

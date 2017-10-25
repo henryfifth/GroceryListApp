@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, FormGroup, Label, Input, Card, CardTitle, CardSubtitle, CardBody, CardText, Col } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
-import './createHouse.css';
+import './CreateHouse.css';
 var axios = require('axios');
 
 class House extends Component {
