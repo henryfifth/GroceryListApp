@@ -64,6 +64,7 @@ passport.deserializeUser(function (id, done) {
   User.findById(id, function (err, user) {
     if (err) {
     } else {
+      console.log(user)
       done(null, user);
     }
   })
@@ -290,7 +291,6 @@ app.post("/signup", (req, res, next) => {
 })
 
 app.post('/login', function (req, res, next) {
-
   passport.authenticate('local', function (err, user) {
     if (err) {
       res.json({ found: false, success: false, err: true, message: err });
@@ -311,6 +311,14 @@ app.post('/login', function (req, res, next) {
   var password = req.body.password;
 });
 
+app.get('/logout', (req, res) => {
+   req.logout(); 
+   req.session.destroy(); 
+   res.redirect('/'); 
+  })
+
+
+
 app.post("/create-house", (req, res, next) => {
   var house = new House();
   house.houseName = req.body.houseName;
@@ -328,7 +336,6 @@ app.post("/create-house", (req, res, next) => {
         success: false
       });
     } else {
-      console.log('or here')
       house.save((err, houseReturned) => {
         if (err) {
           console.log(err);

@@ -41,6 +41,7 @@ deleteItem(id) {
     _id: id
   })
   .then((data) => {
+    console.log(data)
     this.setState({
       items: data.data
     });
@@ -49,7 +50,6 @@ deleteItem(id) {
 
 selectorToServer(id, toggleValue) {
   axios.put('/selector/', {
-    
     _id: id, selector: toggleValue
   }, {headers: { 'Content-Type': 'application/json' }}
 ).then((data) => {

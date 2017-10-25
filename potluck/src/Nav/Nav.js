@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import { withRouter } from 'react-router-dom';
+import { Collapse, Button, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 import './Nav.css'
 
 
-export default class Navvy extends Component {
+class Navvy extends Component {
   constructor(){
     super()
     this.toggle = this.toggle.bind(this);
+    this.navLogOut = this.navLogOut.bind(this);
     this.state = {
       isOpen: false
     };
@@ -16,8 +18,19 @@ export default class Navvy extends Component {
       isOpen: !this.state.isOpen
     });
   }
+
+  navLogOut(){
+    this.props.logOut()
+    .then(()=>{
+    this.props.history.push("/login");   
+    })       
+  }
+
   render(){
-    if (this.props.currentUser.firstName !== "") {
+    console.log(this.props)
+
+    if (sessionStorage.getItem('name') != "") {
+      let name = sessionStorage.getItem("name");    
       return(
       <div id="navvy">
       <Navbar light expand="md">
@@ -26,13 +39,16 @@ export default class Navvy extends Component {
         <Collapse isOpen={this.state.isOpen} navbar>
           <Nav className="ml-auto" navbar>
             <NavItem>
-              Hello, {this.props.currentUser.firstName}
+              Hello, {name}
             </NavItem>
             <NavItem>
               <NavLink href="/house" >Create House</NavLink>
             </NavItem>
             <NavItem>
             <NavLink href="/join-house" >Join House</NavLink>
+            </NavItem>
+            <NavItem>
+            <Button action onClick={this.navLogOut} >Logout</Button>
             </NavItem>
           </Nav>
         </Collapse>
@@ -52,13 +68,6 @@ export default class Navvy extends Component {
               <NavItem>
                 <NavLink href="/login" >Login</NavLink>
               </NavItem>
-              <NavItem>
-                <NavLink href="/house" >Create House</NavLink>
-              </NavItem>
-              <NavItem>
-              <NavLink href="/join-house" >Join House</NavLink>
-              </NavItem>
-
             </Nav>
           </Collapse>
         </Navbar>
@@ -66,3 +75,5 @@ export default class Navvy extends Component {
   )
   }
 }}
+
+export default withRouter(Navvy);
