@@ -58,7 +58,6 @@ passport.use(new LocalStrategy({ username: "email", password: "password" },  (em
 )
 
 passport.serializeUser(function (user, done) {
-
   done(null, user._id);
 })
 
@@ -66,7 +65,6 @@ passport.deserializeUser(function (id, done) {
   User.findById(id, function (err, user) {
     if (err) {
     } else {
-        console.log("69 HAHAHA")
       done(null, user);
     }
   })
@@ -134,16 +132,27 @@ function inviteEmail(email) {
 }
 
 
-//begin socket stuff
-io.on('connection', (client)=>{
-    client.on('list', (interval) => {
-        console.log("HERE")
-        setInterval(() => {
-            client.emit('list', getList());
-        }, interval);
-      });
-});
-//end socket stuff
+// io.on('connection', (client)=>{
+//     console.log('a user connected');
+   
+//     socket.on('disconnect', () => {
+//       console.log('user disconnected');
+//     });
+//     client.on('subscribeToTimer', (interval) => {
+//         console.log('client is subscribing to timer with interval ', interval);
+//         setInterval(() => {
+//             var d = new Date();
+//             var n = d.toString();
+//             client.emit('timer', n);
+//         }, interval);
+//     });
+//     client.on('functionThatGetsTheListAndReturnsItSoThatTheUserDoesNotHaveToRefreshThePageJustToSeeIfANewItemWasAddedOrRemovedFromTheList', (interval)=>{
+//         setInterval(()=>{
+//             console.log('here');
+//             client.emit('list', ['hello', 'world'])
+//         }, interval);
+//     })
+// });
 
 app.post('/items', function (req, res, next) {
   var item = new Item();
@@ -167,23 +176,26 @@ app.post('/items', function (req, res, next) {
   });
 });
 
-function getList(){
-    console.log("I'M HERE")
-    app.get('/houses', function (req, res, next) {
+app.get('/houses', function (req, res, next) {
+    console.log("Got here")
     if (req.user) {
         House.findById(req.user.house, (err, item) => {
-        if (err) {
-            console.log(err);
-            next(err);
-        }
+            if (err) {
+                console.log(err);
+                next(err);
+            }
         }).populate('items').exec((err, items) => {
-        if (items != null) {
-            res.json(items.items)
-        }
+            if (items != null) {
+                // socket.emit('list', items.items);                
+                res.json(items.items);
+            }
         });
+    }else{
+        console.log("no req.user")
+        res.json("sorry brah! something went wrong")
     }
-    });
-}
+});
+
 
 app.put('/selector', (req, res, next) => {
   House.findByIdAndUpdate({ _id: req.user.house }, "items", (err, house) => {
@@ -404,8 +416,6 @@ app.get('/user', (req, res, next) => {
       console.log(err)
     }
   }).populate('house').exec((err, user) => {
-      console.log("HERE AM I")
-    console.log(user);
     res.json(user)
   });
 });

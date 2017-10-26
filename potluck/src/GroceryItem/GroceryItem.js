@@ -33,7 +33,7 @@ export default class GroceryItem extends Component {
         <tr>
           <td><ListGroup>
               <ListGroupItem action onClick={() => this.selectorToggle(this.props.item._id)}>
-             {this.props.item.name}
+             {this.props.item}
              </ListGroupItem></ListGroup></td>
           <td><ListGroup><ListGroupItem>{this.props.item.quantity}</ListGroupItem></ListGroup></td>
           {/* WHY does class='delete' work, but className='delete' (proper syntax) does not work?!?!?! */}
