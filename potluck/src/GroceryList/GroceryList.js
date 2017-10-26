@@ -21,7 +21,7 @@ sortFunc(array){
     })
     return(                                                                                   
     <div class='list-group'>
-      <Table >
+      <Table>
         <tbody >
         {newList}
       </tbody>   

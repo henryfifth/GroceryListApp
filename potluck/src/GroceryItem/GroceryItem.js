@@ -31,7 +31,7 @@ export default class GroceryItem extends Component {
     }
       return (
         <tr>
-          <td><ListGroup className='grocery-item'>
+          <td><ListGroup className='item-list'>
               <ListGroupItem action onClick={() => this.selectorToggle(this.props.item._id)}>
              {this.props.item.name}
              </ListGroupItem></ListGroup></td>
