@@ -1,4 +1,4 @@
-.createhouse-card {
+.joinhouse-card {
   margin-left: 30%;
   margin-right: 30%;
   width: 40%;
@@ -6,21 +6,25 @@
   padding: 30px;
 }
 
-.createhouse-button{
+.joinhouse-button{
   margin-left: 30%;
   margin-right: 30%;
   width: 40%;
 }
 
-.createhouse-input{
+.joinhouse-input{
   flex-direction: column;
 }
 
-.createhouse-title{
+.joinhouse-title{
   padding: 5px;
-  text-align: center;
 }
 
-.create-col{
+.join-col{
   margin-top: 5%;
+}
+
+.error{
+  margin-top: 5% !important;
+  text-align: center;
 }
