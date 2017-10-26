@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import { Card, CardTitle, CardSubtitle, CardBody, Col } from 'reactstrap';
 import GroceryInputs from '../GroceryInputs/GroceryInputs';
 import './Main.css';
-// import { Card, CardTitle } from 'reactstrap';
 import GroceryList from "../GroceryList/GroceryList";
 var axios = require('axios');
 
@@ -47,7 +47,9 @@ deleteItem(id) {
 };
 
 selectorToServer(id, toggleValue) {
-  axios.put('/selector/', {_id: id, selector: toggleValue}, {headers: { 'Content-Type': 'application/json' }}
+  axios.put('/selector/', {
+    _id: id, selector: toggleValue
+  }, {headers: { 'Content-Type': 'application/json' }}
 ).then((data) => {
   this.setState({
     items: data.data
@@ -85,27 +87,29 @@ componentDidMount(){
     if (this.state.initialized === false) {
       return (
         <div className='main'>
-        <h2>
-          Loading...
-        </h2>
+        <Col className='main-col'></Col>
+        <Card className='main-card'>
+          <CardTitle>Welcome to Potluck!</CardTitle>{' '}
+          <CardSubtitle>Create a shared grocery list with your housemates.</CardSubtitle>{' '}
+          <CardBody> First, create a house for everyone to join. Already received an invite? Click the Join House link on the navbar. <br/> Clicking the Potluck logo in the top left corner will always bring you back to your shared grocery list.</CardBody>{' '}
+        </Card>
         </div>
+        )
+    }else {
+        return(
+            <div className='main'>
+            <GroceryInputs className='grocery-inputs' 
+                sendData={this.sendData} 
+                items={this.state.items}
+                state={this.state} />
+            <GroceryList 
+                className='grocery-inputs' 
+                selectorToServer={this.selectorToServer} 
+                deleteItem={this.deleteItem} 
+                items={this.state.items} 
+                class='main' 
+            />
+            </div>
         )}
-
-    else {
-  return(
-    <div className='main'>
-      <GroceryInputs className='grocery-inputs' 
-        sendData={this.sendData} 
-        items={this.state.items}
-        state={this.state} />
-      <GroceryList 
-        className='grocery-inputs' 
-        selectorToServer={this.selectorToServer} 
-        deleteItem={this.deleteItem} 
-        items={this.state.items} 
-        class='main' 
-      />
-    </div>
-  )} 
-  }
+    }
 }

@@ -1,0 +1,30 @@
+.joinhouse-card {
+  margin-left: 30%;
+  margin-right: 30%;
+  width: 40%;
+  display: flex;
+  padding: 30px;
+}
+
+.joinhouse-button{
+  margin-left: 30%;
+  margin-right: 30%;
+  width: 40%;
+}
+
+.joinhouse-input{
+  flex-direction: column;
+}
+
+.joinhouse-title{
+  padding: 5px;
+}
+
+.join-col{
+  margin-top: 5%;
+}
+
+.error{
+  margin-top: 5% !important;
+  text-align: center;
+}

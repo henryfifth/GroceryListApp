@@ -23,11 +23,13 @@
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "mongodb-uri": "^0.9.7",
-    "mongoose": "^4.12.3",
+    "mongoose": "^4.12.4",
     "node-fetch": "^1.7.3",
     "nodemailer": "^4.3.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "password-hash": "^1.2.2"
+    "password-hash": "^1.2.2",
+    "react-password-strength": "^2.2.0",
+    "socket.io": "^2.0.4"
   }
 }

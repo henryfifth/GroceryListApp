@@ -1,31 +1,29 @@
-.login{
-  background: url('../main-background.jpg'); 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  height: 100vh;
-  width: 100%;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+.login-card {
+  align-content: center;
+  margin-left: 30%;
+  margin-right: 30%;
+  width: 40%;
+  display: flex;
+  padding: 30px;
+  font-family: white, Arial, Helvetica, sans-serif !important
 }
 
-.field {
-  margin-top: 10%
-}
-
-/* .login-button{
+.login-button{
   margin-left: 30%;
   margin-right: 30%;
   width: 40%;
 }
 
 .login-input{
-  margin-left: 30%;
-  margin-right: 30%;
-  width: 40%;
-  display: flex;
   flex-direction: column;
-} */
+}
+
+.login-title{
+  text-align: center;
+}
+
+.space{
+  margin-top: 9%;
+}
 
  
