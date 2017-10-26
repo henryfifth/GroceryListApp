@@ -96,23 +96,22 @@ componentDidMount(){
           <CardBody> First, create a house for everyone to join. Already received an invite? Click the Join House link on the navbar. <br/> Clicking the Potluck logo in the top left corner will always bring you back to your shared grocery list.</CardBody>{' '}
         </Card>
         </div>
+        )
+    }else {
+        return(
+            <div className='main'>
+            <GroceryInputs className='grocery-inputs' 
+                sendData={this.sendData} 
+                items={this.state.items}
+                state={this.state} />
+            <GroceryList 
+                className='grocery-inputs' 
+                selectorToServer={this.selectorToServer} 
+                deleteItem={this.deleteItem} 
+                items={this.state.items} 
+                class='main' 
+            />
+            </div>
         )}
-
-    else {
-  return(
-    <div className='main'>
-      <GroceryInputs className='grocery-inputs' 
-        sendData={this.sendData} 
-        items={this.state.items}
-        state={this.state} />
-      <GroceryList 
-        className='grocery-inputs' 
-        selectorToServer={this.selectorToServer} 
-        deleteItem={this.deleteItem} 
-        items={this.state.items} 
-        class='main' 
-      />
-    </div>
-  )} 
-  }
+    }
 }

@@ -6,6 +6,7 @@ import Login from "../Login/login";
 import Navvy from "../Nav/Nav.js";
 import House from "../CreateHouse/createHouse.js";
 import JoinHouse from "../JoinHouse/joinHouse.js";
+import Timer from "../timer.js"
 import {
     BrowserRouter as Router,
     Route,
@@ -34,11 +35,13 @@ class App extends Component {
             username: a,
             password: b,
     }).then((res) => {
-        this.setState({
-          currentUser: res.data
-          });
-          sessionStorage.setItem('name', this.state.currentUser.firstName);          
-          resolve(res.data);
+        if(res.data.success){
+            this.setState({
+                currentUser: res.data
+            });
+            sessionStorage.setItem('name', this.state.currentUser.firstName);       
+        }   
+        resolve(res.data);
       });
     });
   }
@@ -47,26 +50,41 @@ class App extends Component {
     return new Promise((resolve, reject)=>{      
     axios.get('/logout').then((res)=>{
       console.log(res)
-        sessionStorage.setItem('name', "");
+        sessionStorage.removeItem('name', "");
         resolve(res.data);      
       })
   }
 )} 
   render() {
-    return (
-        <Router>
-           <div className='bg'>
-             <Route path='/' render={()=><Navvy logOut={this.logOut} currentUser={this.state.currentUser}/>} />
-             <Route path='/Login' render={() => <Login submitLogin={this.submitLogin} />}/>
-             <Route path='/Signup' render={()=> <SignUp/>}/> 
-             <Route path='/Main' render={()=> <Main/>}/>
-             <Route path='/House' render={()=> <House/>}/>
-             <Route path='/Join-House' render={()=> <JoinHouse />}/>
-          </div>
-        </Router>
-      
-    )}
-
+        if(sessionStorage.name != null){
+            return (
+                <Router>
+                <div className='bg'>
+                    <Route path='/' render={()=><Navvy logOut={this.logOut} currentUser={this.state.currentUser}/>} />
+                    <Route path='/Login' render={() => <Login submitLogin={this.submitLogin} />}/>
+                    <Route path='/Signup' render={()=> <SignUp/>}/> 
+                    <Route path='/Main' render={()=> <Main/>}/>
+                    <Route path='/House' render={()=> <House/>}/>
+                    <Route path='/Join-House' render={()=> <JoinHouse />}/>
+                    <Route path='/timer' render={()=><Timer/>}/>
+                </div>
+                </Router>
+            
+            )
+        }else{
+            return (
+                <Router>
+                <div className='bg'>
+                    <Route path='/' render={()=><Navvy logOut={this.logOut} currentUser={this.state.currentUser}/>} />
+                    <Route path='/Login' render={() => <Login submitLogin={this.submitLogin} />}/>
+                    <Route path='/timer' render={()=><Timer/>}/>
+                    <Route path='/Signup' render={()=> <SignUp/>}/>
+                </div>
+                </Router>
+            )
+        }
+    }
 }
+
 
 export default App;

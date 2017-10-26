@@ -27,7 +27,8 @@ class SignUp extends Component {
       password: '',
       confirmPassword: '',
       message: '',
-      userColor: ''
+      userColor: '',
+      success: false
     }
   }
 
@@ -35,43 +36,48 @@ class SignUp extends Component {
     this.setState({ userColor: color.hex });
   };
 
-  submitSignup(signupObj) {
-    return new Promise((resolve, reject) => {
-      axios.post('/signup', {
-        firstName: signupObj.firstName,
-        lastName: signupObj.lastName,
-        email: signupObj.email,
-        password: signupObj.password,
-        color: signupObj.color
-      }
-      ).then((userObj) => {
-        console.log(userObj)
-          this.setState({
-            firstName: '',
-            lastName: '',
-            email: '',
-            password: '',
-            confirmPassword: '',
-            message: userObj.data.message,
-            userColor: ''
-            
-          })        
-          resolve();          
-        }
-    )})
+    submitSignup(signupObj) {
+        return new Promise((resolve, reject) => {
+        axios.post('/signup', {
+            firstName: signupObj.firstName,
+            lastName: signupObj.lastName,
+            email: signupObj.email,
+            password: signupObj.password,
+            color: signupObj.color
+        }).then((userObj) => {
+                this.setState({
+                    firstName: '',
+                    lastName: '',
+                    email: '',
+                    password: '',
+                    confirmPassword: '',
+                    message: userObj.data.message,
+                    userColor: '',
+                    success: userObj.data.success
+                })        
+                resolve();          
+            }
+        )
+        })
     }
 
 
   handleSignup() {
     if (this.state.password === this.state.confirmPassword) {
-      this.submitSignup({
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        email: this.state.email,
-        password: this.state.password,
-        color: this.state.userColor
-      })
-      this.props.history.push("/login");
+        return new Promise((resolve, reject) => {
+            this.submitSignup({
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                email: this.state.email,
+                password: this.state.password,
+                color: this.state.userColor
+            }).then((info) => {
+                if(this.state.success){
+                  this.props.history.push("/login");
+                }
+                resolve();
+            })
+        })
     } else {
         this.setState({
           message: 'Passwords do not match'
@@ -106,6 +112,7 @@ class SignUp extends Component {
         <Card className="signup-card">
           <CardBody>
             <CardTitle className="signup-title"> Sign Up</CardTitle>
+            <CardSubtitle style={{color:'red'}}>{this.state.message}</CardSubtitle><br/>
               <FormGroup className="signup-input">
                 <Label for="firstName">First Name:</Label>{' '}
                 <Input type="text" onChange={this.inputfirstNameChange} value={this.state.firstName} name="firstName" id="firstName" placeholder="John" />
@@ -126,7 +133,7 @@ class SignUp extends Component {
                 changeCallback={this.changeCallback}
                 minLength={5}
                 minScore={2}
-                scoreWords={['weak', 'okay', 'good', 'strong', 'stronger']}
+                scoreWords={['weak', 'okay', 'good', 'strong', 'very strong']}
                 inputProps={{ placeholder: "abc123", autoComplete: "off", className: "form-control" }}
               />
               </FormGroup>
@@ -139,7 +146,6 @@ class SignUp extends Component {
               color={ this.state.userColor }
               onChangeComplete={ this.handleChangeComplete }/>
               {' '}
-              <CardSubtitle style={{color:'red'}}>{this.state.message}</CardSubtitle><br/>
               <Button className="signup-button" onClick={this.handleSignup}>Submit</Button> 
          </CardBody>
          </Card>

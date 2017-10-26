@@ -14,6 +14,7 @@ var Item = require('./models/items.js');
 var cookieParser = require('cookie-parser');
 const nodemailer = require('nodemailer');
 // var exec = require('./exec.js');
+const io = require('socket.io')();
 
 var mongodbUri = 'mongodb://localhost/items';
 var mongooseUri = uriUtil.formatMongoose(mongodbUri);
@@ -65,7 +66,7 @@ passport.deserializeUser(function (id, done) {
   User.findById(id, function (err, user) {
     if (err) {
     } else {
-      console.log(user)
+        console.log("69 HAHAHA")
       done(null, user);
     }
   })
@@ -87,14 +88,12 @@ function verifyEmail(email) {
       arr.push(emailSplit[i])
     }
   });
-  arr = arr.toString();
-  return arr;
+  return arr.toString();
 }
 //END CHECK IF EMAIL IS EMAIL
 //BEGIN MAIL HANDLING
 function inviteEmail(email) {
   let beenVerified = verifyEmail(email);
-  console.log(beenVerified);
   if (beenVerified != "") {
     nodemailer.createTestAccount((err, account) => {
       let transporter = nodemailer.createTransport({
@@ -125,12 +124,24 @@ function inviteEmail(email) {
       };
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-          return console.log(error);
+            console.log(error)
+            return error;
         }
       });
     });
   }
 }
+
+//begin socket stuff
+io.on('connection', (client)=>{
+    client.on('list', (interval) => {
+        console.log("HERE")
+        setInterval(() => {
+            client.emit('list', getList());
+        }, interval);
+      });
+});
+//end socket stuff
 
 app.post('/items', function (req, res, next) {
   var item = new Item();
@@ -154,22 +165,23 @@ app.post('/items', function (req, res, next) {
   });
 });
 
-app.get('/houses', function (req, res, next) {
-  if (req.user) {
-    House.findById(req.user.house, (err, item) => {
-      if (err) {
-        console.log(err);
-        next(err);
-      }
-    }).populate('items').exec((err, items) => {
-      if (items == null) {
-        console.log('oh well!')
-      } else {
-        res.json(items.items)
-      }
-    })
-  }
-});
+function getList(){
+    console.log("I'M HERE")
+    app.get('/houses', function (req, res, next) {
+    if (req.user) {
+        House.findById(req.user.house, (err, item) => {
+        if (err) {
+            console.log(err);
+            next(err);
+        }
+        }).populate('items').exec((err, items) => {
+        if (items != null) {
+            res.json(items.items)
+        }
+        });
+    }
+    });
+}
 
 app.put('/selector', (req, res, next) => {
   House.findByIdAndUpdate({ _id: req.user.house }, "items", (err, house) => {
@@ -253,7 +265,6 @@ app.put('/delete', (req, res, next) => {
 })
 
 app.post("/signup", (req, res, next) => {
-
   var user = new User();
   user.firstName = req.body.firstName;
   user.lastName = req.body.lastName;
@@ -270,26 +281,57 @@ app.post("/signup", (req, res, next) => {
         message: err,
         success: false
       });
-    } else {
+    } else if(req.body.password === ""){
+        res.json({
+            found: false,
+            message: "Bruh! Really? No password???",
+            success: false
+        });
+    }else if(verifyEmail(user.email).length <= 0){
+        res.json({
+            found: false,
+            message: "Sorry mate. You have to put in a real email",
+            success: false
+        });
+    }else if(user.firstName.length <= 0){
+        res.json({
+            found: false,
+            message: "Can I at least get your first name?",
+            success: false
+        });
+    }else if(user.lastName.length <= 0){
+        res.json({
+            found: false,
+            message: "What's your last name?",
+            success: false
+        });
+    }else if(user.color.length <= 0){
+        res.json({
+            found: false,
+            message: "Please pick a color. It is important for later on",
+            success: false
+        });
+    }else{
       user.save((error, userReturned) => {
-        console.log('VVVV error')
         if (error) {
-          console.log(error);
-          res.json({
-            message: 'An account is already associated with that email address.'
-          })
-        } else {
+            console.log(error);
+            res.json({
+                found: true,
+                message: 'An account is already associated with that email address.',
+                success: false
+            });
+        }else{
           res.json({
             userReturned: userReturned,
             found: true,
             message: "Account created.",
             success: true
-          })
+          });
         }
-      })
+      });
     }
-  })
-})
+  });
+});
 
 app.post('/login', function (req, res, next) {
   passport.authenticate('local', function (err, user) {
@@ -314,19 +356,17 @@ app.post('/login', function (req, res, next) {
 });
 
 app.get('/logout', (req, res) => {
-   req.logout(); 
-   req.session.destroy(); 
-   res.redirect('/'); 
-  })
-
-
+   req.logout();
+   req.session.destroy();
+   res.redirect('/');
+});
 
 app.post("/create-house", (req, res, next) => {
   var house = new House();
   house.houseName = req.body.houseName;
   house.password = req.body.password;
   house.roommates = req.body.roommates;
-  // bob(house.roommates);
+  inviteEmail(house.roommates);
   User.findOne({
     houseName: house.houseName
   }, (err, foundHouse) => {
@@ -353,9 +393,7 @@ app.post("/create-house", (req, res, next) => {
       });
     }
   })
-})
-
-
+});
 
 app.get('/user', (req, res, next) => {
   User.findById(req.user._id, (err, foundUser) => {
@@ -363,41 +401,51 @@ app.get('/user', (req, res, next) => {
       console.log(err)
     }
   }).populate('house').exec((err, user) => {
+      console.log("HERE AM I")
     console.log(user);
     res.json(user)
   });
 });
 
 app.put('/join', (req, res, next) => {
-  console.log(req.user)
-  House.findOne({ "houseName": req.body.joinHouse }, "password users", (err, house) => {
-    if (err) {
-      next(err)
-    } else if (!house || (house.password != req.body.password)) {
-      res.json({ message: "Something went wrong! Please try again." });
-    } 
-    else if (house.password == req.body.password) {
-      console.log(req.user)
-      User.findById(req.user._id, (err, foundUser) => {
+    console.log("GOT HERE");
+    console.log(req.body)
+    console.log(req.user);
+    House.findOne({ "houseName": req.body.joinHouse }, "password users", (err, house) => {
+        console.log("AND HERE");
+        console.log(house)
         if (err) {
-          console.log(err)
-          res.json({ message: "User not found" })
-        } else {
-          foundUser.house = house._id
-          foundUser.save((err, userReturned) => {
-            if (err) {
-              next(err)
-            } else {
-              res.json(userReturned)
-            }
-          })
+            next(err);
+        } else if (!house) {
+            console.log("DOWN");
+            res.json({ message: "Something went wrong! Please try again." });
+        } else if (house.password === req.body.password) {
+            console.log("GOT HERE TOO");
+            User.findById(req.user._id, (err, foundUser) => {
+                console.log("ONCE AGAIN");
+                if (err) {
+                console.log(err)
+                res.json({ message: "User not found" })
+                } else {
+                    console.log("JUST ONE MORE");
+                    foundUser.house = house._id;
+                    foundUser.save((err, userReturned) => {
+                        if (err) {
+                        next(err);
+                        } else {
+                            console.log("SUCCESS");
+                            console.log(userReturned);
+                            res.json(userReturned);
+                        }
+                    });
+                }
+            });
         }
-      })
-    }
-  })
+    });
 });
 
 var port = 5000;
 app.listen(port, () => {
   console.log('listening on port ' + port);
 });
+//Not found

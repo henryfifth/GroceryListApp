@@ -27,24 +27,22 @@ class JoinHouse extends Component{
   }
   joinIt() {
     axios.put('/join', {
-            joinHouse: this.state.joinHouse,
-            password: this.state.password
-          })
-    .then((userObj) => {
-      console.log(userObj)
-      if (userObj.data.message == "Something went wrong! Please try again.") {
-        this.setState({
-          message: userObj.data.message
-        })  
-      }
-      else {
-        this.setState({
-          message: userObj.data.message,
-          joinHouse: '',
-          password: '',
-        });
-        this.props.history.push("/main");
-      }
+        joinHouse: this.state.joinHouse,
+        password: this.state.password
+    }).then((userObj) => {
+        console.log(userObj)
+        if (userObj.data.message == "Something went wrong! Please try again.") {
+            this.setState({
+                message: userObj.data.message
+            });
+        }else {
+            this.setState({
+                message: userObj.data.message,
+                joinHouse: '',
+                password: '',
+            });
+            this.props.history.push("/main");
+        }
     }); 
   }
 
