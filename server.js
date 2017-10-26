@@ -32,7 +32,7 @@ db.once('open', function () {
 
 app.use(bodyParser.json({ type: 'application/json' }));
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(expressSession({ secret: "mark rules" }));
+app.use(expressSession({ secret: "lee is a fucking beast" }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static('public'));
@@ -89,6 +89,7 @@ function verifyEmail(email) {
   return arr.toString();
 }
 //END CHECK IF EMAIL IS EMAIL
+
 //BEGIN MAIL HANDLING
 function inviteEmail(email) {
   let beenVerified = verifyEmail(email);
@@ -130,6 +131,7 @@ function inviteEmail(email) {
   }
 }
 
+
 // io.on('connection', (client)=>{
 //     console.log('a user connected');
    
@@ -151,7 +153,6 @@ function inviteEmail(email) {
 //         }, interval);
 //     })
 // });
-
 
 app.post('/items', function (req, res, next) {
   var item = new Item();
@@ -274,6 +275,7 @@ app.put('/delete', (req, res, next) => {
       }
     });
   })
+
 
 })
 
@@ -459,4 +461,3 @@ var port = 5000;
 app.listen(port, () => {
   console.log('listening on port ' + port);
 });
-//Not found

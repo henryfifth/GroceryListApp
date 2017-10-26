@@ -53,12 +53,10 @@ getUser() {
 
 
 deleteItem(id) {
-  console.log(id)
   axios.put('/delete', {
     _id: id
   })
   .then((data) => {
-    console.log(data)
     this.setState({
       items: data.data
     });
