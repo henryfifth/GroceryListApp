@@ -2,20 +2,37 @@ import React, { Component } from 'react';
 import { Card, CardTitle, CardSubtitle, CardBody, Col } from 'reactstrap';
 import GroceryInputs from '../GroceryInputs/GroceryInputs';
 import './Main.css';
+import openSocket from 'socket.io-client';
 import GroceryList from "../GroceryList/GroceryList";
-var axios = require('axios');
+const  socket = openSocket('localhost:8000');
+const axios = require('axios');
 
 export default class Main extends Component {
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
     this.getList = this.getList.bind(this);
     this.sendData = this.sendData.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
     this.selectorToServer = this.selectorToServer.bind(this);
     this.getUser = this.getUser.bind(this);
-    this.state = {
-      initialized: false
+
+    this.list((err, checkList) =>{ 
+        this.setState({ 
+            checkList
+        });
     }
+    );
+    this.state = {
+      initialized: true,
+      checkList: false,
+      items: []
+    }
+  }
+
+list(cb) {
+    console.log("Got to line 29")
+    socket.on('checkList', list => cb(null, list));
+    socket.emit('getList', 1000);
 }
 
 sendData(foodObj) {
@@ -67,6 +84,7 @@ getList(){
   }
   axios.get('/houses')
   .then((data)=>{
+      console.log("RUN")
     this.setState({
       items:data.data,
       initialized: true
@@ -75,8 +93,13 @@ getList(){
 }
 
 componentDidMount(){
-  this.getList();
   this.getUser();
+  if(this.state.checkList){
+      this.getList();
+      this.setState({
+          checkList: false
+      })
+  }
 }
 
   _handleKeyPress = (e) => {
@@ -86,6 +109,7 @@ componentDidMount(){
   }
 
   render(){
+      console.log(this.state.items)
     if (this.state.initialized === false) {
       return (
         <div className='main'>
