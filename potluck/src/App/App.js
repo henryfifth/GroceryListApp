@@ -13,7 +13,6 @@ import {
 } from 'react-router-dom';
 var axios = require('axios');
 
-
 class App extends Component {
     constructor() {
         super();
@@ -23,11 +22,13 @@ class App extends Component {
             email: "",
             password: "",
             message: "",
+            bool: false,
             currentUser: {
                 firstName: "",
             }
         }
     }
+
 
   submitLogin(a, b) {
     return new Promise((resolve, reject)=>{
