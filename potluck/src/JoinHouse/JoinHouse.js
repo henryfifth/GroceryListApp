@@ -1,7 +1,7 @@
 import React, { Component } from 'react'; 
 import { Button, FormGroup, Label, Input, Card, CardTitle, CardBody, CardSubtitle, CardText, Col } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
-import './JoinHouse.css';
+import './joinHouse.css';
 var axios = require('axios');
 
 
@@ -27,24 +27,22 @@ class JoinHouse extends Component{
   }
   joinIt() {
     axios.put('/join', {
-            joinHouse: this.state.joinHouse,
-            password: this.state.password
-          })
-    .then((userObj) => {
-      console.log(userObj)
-      if (userObj.data.message == "Something went wrong! Please try again.") {
-        this.setState({
-          message: userObj.data.message
-        })  
-      }
-      else {
-        this.setState({
-          message: userObj.data.message,
-          joinHouse: '',
-          password: '',
-        });
-        this.props.history.push("/main");
-      }
+        joinHouse: this.state.joinHouse,
+        password: this.state.password
+    }).then((userObj) => {
+        console.log(userObj)
+        if (userObj.data.message == "Something went wrong! Please try again.") {
+            this.setState({
+                message: userObj.data.message
+            });
+        }else {
+            this.setState({
+                message: userObj.data.message,
+                joinHouse: '',
+                password: '',
+            });
+            this.props.history.push("/main");
+        }
     }); 
   }
 
