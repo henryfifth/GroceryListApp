@@ -14,7 +14,6 @@ var Item = require('./models/items.js');
 var cookieParser = require('cookie-parser');
 const nodemailer = require('nodemailer');
 // var exec = require('./exec.js');
-const io = require('socket.io')();
 
 var mongodbUri = 'mongodb://localhost/items';
 var mongooseUri = uriUtil.formatMongoose(mongodbUri);
@@ -130,29 +129,6 @@ function inviteEmail(email) {
   }
 }
 
-// io.on('connection', (client)=>{
-//     console.log('a user connected');
-   
-//     socket.on('disconnect', () => {
-//       console.log('user disconnected');
-//     });
-//     client.on('subscribeToTimer', (interval) => {
-//         console.log('client is subscribing to timer with interval ', interval);
-//         setInterval(() => {
-//             var d = new Date();
-//             var n = d.toString();
-//             client.emit('timer', n);
-//         }, interval);
-//     });
-//     client.on('functionThatGetsTheListAndReturnsItSoThatTheUserDoesNotHaveToRefreshThePageJustToSeeIfANewItemWasAddedOrRemovedFromTheList', (interval)=>{
-//         setInterval(()=>{
-//             console.log('here');
-//             client.emit('list', ['hello', 'world'])
-//         }, interval);
-//     })
-// });
-
-
 app.post('/items', function (req, res, next) {
   var item = new Item();
   item.name = req.body.name
@@ -185,7 +161,6 @@ app.get('/houses', function (req, res, next) {
             }
         }).populate('items').exec((err, items) => {
             if (items != null) {
-                // socket.emit('list', items.items);                
                 res.json(items.items);
             }
         });
