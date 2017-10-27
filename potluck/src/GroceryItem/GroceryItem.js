@@ -26,19 +26,20 @@ export default class GroceryItem extends Component {
           <td><Button class='delete' onClick={() => this.props.deleteItem(this.props.item._id)} color="danger">X</Button>
           </td>
         </tr>
-      
     )
-    }
+    }else{
       return (
         <tr>
-          <td><ListGroup className='item-list'>
+          <td><ListGroup>
               <ListGroupItem action onClick={() => this.selectorToggle(this.props.item._id)}>
              {this.props.item.name}
              </ListGroupItem></ListGroup></td>
           <td><ListGroup><ListGroupItem>{this.props.item.quantity}</ListGroupItem></ListGroup></td>
+          {/* WHY does class='delete' work, but className='delete' (proper syntax) does not work?!?!?! */}
           <td><Button class='delete' onClick={() => this.props.deleteItem(this.props.item._id)} color="danger">X</Button>
           </td>
         </tr>
     )
     }
   }
+}
