@@ -9,7 +9,7 @@ class GroceryList extends Component {
         super();
         this.sortFunc = this.sortFunc.bind(this);
     }
-    sortFunc(array){ 
+    sortFunc(array){
         array.sort((a,b)=>{
             return (b.selector) - (a.selector);
         })
@@ -32,6 +32,5 @@ class GroceryList extends Component {
         )
     }
 }
-
 
 export default withRouter(GroceryList);
