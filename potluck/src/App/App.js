@@ -41,7 +41,7 @@ class App extends Component {
                 currentUser: res.data
             });
             sessionStorage.setItem('name', this.state.currentUser.firstName);       
-        }   
+        }
         resolve(res.data);
       });
     });
@@ -63,7 +63,7 @@ class App extends Component {
                     <Route path='/' render={()=><Navvy logOut={this.logOut} currentUser={this.state.currentUser}/>} />
                     <Route path='/Login' render={() => <Login submitLogin={this.submitLogin} />}/>
                     <Route path='/Signup' render={()=> <SignUp/>}/> 
-                    <Route path='/Main' render={()=> <Main/>}/>
+                    <Route path='/Main' render={()=> <Main logOut={this.logOut}/>}/>
                     <Route path='/House' render={()=> <House/>}/>
                     <Route path='/Join-House' render={()=> <JoinHouse />}/>
                     <Route path='/timer' render={()=> <Timer />}/>

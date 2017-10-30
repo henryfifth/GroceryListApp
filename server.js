@@ -13,9 +13,14 @@ var uriUtil = require('mongodb-uri');
 var Item = require('./models/items.js');
 var cookieParser = require('cookie-parser');
 const nodemailer = require('nodemailer');
+//If you're reading this and aren't part of the production team, you 
+//need to go to secretShitExample.js and follow instructions there to setup your db
+const secret = require('./secretShit.js');
+//uncomment this boi vvv to play some snake in your browser!!!
 // var exec = require('./exec.js');
 
-var mongodbUri = 'mongodb://localhost/items';
+//haha haxers! you can't read this!
+let mongodbUri = secret.uri;
 var mongooseUri = uriUtil.formatMongoose(mongodbUri);
 var options = {
   server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } },
@@ -31,7 +36,7 @@ db.once('open', function () {
 
 app.use(bodyParser.json({ type: 'application/json' }));
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(expressSession({ secret: "lee is a fucking beast" }));
+app.use(expressSession({ secret: "lee is a fucking beast", cookie: { maxAge: 3600000 } }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static('public'));
@@ -163,12 +168,13 @@ app.get('/houses', function (req, res, next) {
             }
         }).populate('items').exec((err, items) => {
             if (items != null) {
+                console.log(items.items)
                 res.json(items.items);
             }
         });
     }else{
         console.log("no req.user")
-        res.json("sorry brah! something went wrong")
+        res.json({msg: "sorry brah! something went wrong", success: false})
     }
 });
 
@@ -211,7 +217,6 @@ app.put('/houses/', (req, res, next) => {
           console.log(err);
           next(err);
         } else {
-
           House.findById({ _id: req.user.house }, (err, house) => {
             if (err) {
               console.log(err);
@@ -429,6 +434,8 @@ app.put('/join', (req, res, next) => {
                     });
                 }
             });
+        }else{
+            res.json("Sorry brah, something went wrong");
         }
     });
 });

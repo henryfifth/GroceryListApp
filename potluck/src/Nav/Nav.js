@@ -21,8 +21,8 @@ class Navvy extends Component {
   navLogOut(){
     this.props.logOut()
     .then(()=>{
-    this.props.history.push("/login");   
-    })       
+    this.props.history.push("/login");
+    })
   }
 
   render(){
@@ -36,13 +36,13 @@ class Navvy extends Component {
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto"  navbar>
                             <NavItem>
-                                <NavLink href="/profile" style={{color: 'black'}}>Hello, {name}!</NavLink>
+                                <NavLink href="/profile" style={{color: 'red'}}>Hello, {name}!</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="/house" style={{color: 'black'}} >Create House</NavLink>
+                                <NavLink href="/house" style={{color: 'red'}} >Create House</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="/join-house" style={{color: 'black'}}>Join House</NavLink>
+                                <NavLink href="/join-house" style={{color: 'red'}}>Join House</NavLink>
                             </NavItem>
                             <NavItem>
                                 <Button action onClick={this.navLogOut} >Logout</Button>
@@ -61,10 +61,10 @@ class Navvy extends Component {
                 <Collapse isOpen={this.state.isOpen} navbar>
                     <Nav className="ml-auto" navbar>
                         <NavItem>
-                            <NavLink href="/signUp" style={{color: 'black'}}>SignUp</NavLink>
+                            <NavLink href="/signUp" style={{color: 'red'}}>SignUp</NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink href="/login" style={{color: 'black'}}>Login</NavLink>
+                            <NavLink href="/login" style={{color: 'red'}}>Login</NavLink>
                         </NavItem>
                     </Nav>
                 </Collapse>

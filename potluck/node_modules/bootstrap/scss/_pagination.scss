@@ -1,6 +1,8 @@
 .pagination {
   display: flex;
-  @include list-unstyled();
+  // 1-2: Disable browser default list styles
+  padding-left: 0; // 1
+  list-style: none; // 2
   @include border-radius();
 }
 
@@ -36,7 +38,7 @@
   position: relative;
   display: block;
   padding: $pagination-padding-y $pagination-padding-x;
-  margin-left: -$pagination-border-width;
+  margin-left: -1px;
   line-height: $pagination-line-height;
   color: $pagination-color;
   background-color: $pagination-bg;

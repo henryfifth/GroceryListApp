@@ -4,12 +4,12 @@ import GroceryInputs from '../GroceryInputs/GroceryInputs';
 import './Main.css';
 import openSocket from 'socket.io-client';
 import GroceryList from "../GroceryList/GroceryList";
-const  socket = openSocket('192.168.0.4:8000');
+const  socket = openSocket('192.168.1.14:8000');
 const axios = require('axios');
 
 export default class Main extends Component {
   constructor(props){
-    super(props)
+    super(props);
     this.getList = this.getList.bind(this);
     this.sendData = this.sendData.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
@@ -30,7 +30,6 @@ export default class Main extends Component {
   }
 
 list(cb) {
-    console.log("Got to line 29")
     socket.on('checkList', list => cb(null, list));
     socket.emit('getList', 1000);
 }
@@ -90,9 +89,6 @@ getList(){
         checkList: false
         });
     }
-    if(this.state.items){
-
-    }
   })
 }
 
@@ -117,6 +113,7 @@ componentDidMount(){
         this.getList();
       }
     if (this.state.initialized === false) {
+        console.log("got to the if")
       return (
         <div className='main'>
         <Col className='main-col'></Col>
@@ -128,6 +125,7 @@ componentDidMount(){
         </div>
         )
     }else {
+        console.log("Got to the else")
         return(
             <div className='main'>
             <GroceryInputs className='grocery-inputs' 
@@ -140,6 +138,7 @@ componentDidMount(){
                 deleteItem={this.deleteItem} 
                 items={this.state.items} 
                 class='main' 
+                logOut={this.props.logOut}
             />
             </div>
         )}

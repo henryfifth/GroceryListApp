@@ -74,12 +74,12 @@
 .nav-pills {
   .nav-link {
     @include border-radius($nav-pills-border-radius);
-  }
 
-  .nav-link.active,
-  .show > .nav-link {
-    color: $nav-pills-link-active-color;
-    background-color: $nav-pills-link-active-bg;
+    &.active,
+    .show > & {
+      color: $nav-pills-link-active-color;
+      background-color: $nav-pills-link-active-bg;
+    }
   }
 }
 

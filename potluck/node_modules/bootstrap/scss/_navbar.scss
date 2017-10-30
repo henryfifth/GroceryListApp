@@ -98,7 +98,6 @@
 // on the `.navbar` parent.
 .navbar-collapse {
   flex-basis: 100%;
-  flex-grow: 1;
   // For always expanded or extra full navbars, ensure content aligns itself
   // properly vertically. Can be easily overridden with flex utilities.
   align-items: center;
@@ -147,7 +146,8 @@
       }
 
       @include media-breakpoint-up($next) {
-        flex-flow: row nowrap;
+        flex-direction: row;
+        flex-wrap: nowrap;
         justify-content: flex-start;
 
         .navbar-nav {
@@ -174,22 +174,14 @@
           flex-wrap: nowrap;
         }
 
+        // scss-lint:disable ImportantRule
         .navbar-collapse {
-          display: flex !important;  // stylelint-disable-line declaration-no-important
-
-          // Changes flex-bases to auto because of an IE10 bug
-          flex-basis: auto;
+          display: flex !important;
         }
+        // scss-lint:enable ImportantRule
 
         .navbar-toggler {
           display: none;
-        }
-
-        .dropup {
-          .dropdown-menu {
-            top: auto;
-            bottom: 100%;
-          }
         }
       }
     }
@@ -243,13 +235,6 @@
 
   .navbar-text {
     color: $navbar-light-color;
-    a {
-      color: $navbar-light-active-color;
-
-      @include hover-focus {
-        color: $navbar-light-active-color;
-      }
-    }
   }
 }
 
@@ -295,12 +280,5 @@
 
   .navbar-text {
     color: $navbar-dark-color;
-    a {
-      color: $navbar-dark-active-color;
-
-      @include hover-focus {
-        color: $navbar-dark-active-color;
-      }
-    }
   }
 }

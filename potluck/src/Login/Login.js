@@ -26,6 +26,7 @@ class Login extends Component {
   testFunc(a, b) {
     this.props.submitLogin(a, b).then((user) => {
       if (user.found){
+          console.log(this.props)
       this.props.history.push("/main");
       } else {
           this.setState({
