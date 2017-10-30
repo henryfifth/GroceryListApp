@@ -1,0 +1,14 @@
+.key-row {
+    align-content: center;
+    width: 20px
+}
+
+.key-housemate {
+    mix-blend-mode: normal;
+    width: 55%;
+}
+
+.key-btn {
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+}

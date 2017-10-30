@@ -4,7 +4,8 @@ import GroceryInputs from '../GroceryInputs/GroceryInputs';
 import './Main.css';
 import openSocket from 'socket.io-client';
 import GroceryList from "../GroceryList/GroceryList";
-const  socket = openSocket('192.168.1.14:8000');
+import GroceryInstructions from '../GroceryInstructions/GroceryInstructions';
+const  socket = openSocket('192.168.1.21:8000');
 const axios = require('axios');
 
 export default class Main extends Component {
@@ -25,7 +26,8 @@ export default class Main extends Component {
     this.state = {
       initialized: true,
       checkList: true,
-      items: []
+      items: [],
+      house: null
     }
   }
 
@@ -113,7 +115,6 @@ componentDidMount(){
         this.getList();
       }
     if (this.state.initialized === false) {
-        console.log("got to the if")
       return (
         <div className='main'>
         <Col className='main-col'></Col>
@@ -125,9 +126,12 @@ componentDidMount(){
         </div>
         )
     }else {
-        console.log("Got to the else")
         return(
             <div className='main'>
+              <GroceryInstructions 
+                getList={this.getList}
+                house={this.state.house}
+              />
             <GroceryInputs className='grocery-inputs' 
                 sendData={this.sendData} 
                 items={this.state.items}

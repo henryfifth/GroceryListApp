@@ -15,7 +15,7 @@ export default class GroceryItem extends Component {
   }
 
   render() { 
-    if (this.props.item.selector === true) {
+    if (this.props.item.selector) {
       return (
         <tr>
           <td><ListGroup editable={false} selectTextOnFocus={false} >

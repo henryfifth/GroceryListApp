@@ -15,7 +15,10 @@ class JoinHouse extends Component{
     this.state = { 
       joinHouse: '',
       password: '', 
-      message: ''
+      message: '',
+      firstName: '',
+      color: '',
+      housemates: []
     }
   }
 
@@ -30,8 +33,7 @@ class JoinHouse extends Component{
         joinHouse: this.state.joinHouse,
         password: this.state.password
     }).then((userObj) => {
-        console.log(userObj)
-        if (userObj.data.message == "Something went wrong! Please try again.") {
+        if (userObj.data.message === "Something went wrong! Please try again.") {
             this.setState({
                 message: userObj.data.message
             });
@@ -40,6 +42,7 @@ class JoinHouse extends Component{
                 message: userObj.data.message,
                 joinHouse: '',
                 password: '',
+                housemates: userObj.data.housemate
             });
             this.props.history.push("/main");
         }

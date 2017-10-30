@@ -45,7 +45,6 @@ class SignUp extends Component {
         color: signupObj.color
       }
       ).then((userObj) => {
-        console.log(userObj)
         if (userObj.data.message == 'An account is already associated with that email address.') {
           this.setState({
             message: userObj.data.message
@@ -91,7 +90,8 @@ class SignUp extends Component {
   inputemailChange(event) {
     this.setState({ email: event.target.value });
   }
-  changeCallback(event) {    this.setState({ password: event.password });
+  changeCallback(event) {
+      this.setState({ password: event.password });
   }
   confirmPassword(event) {
     this.setState({ confirmPassword: event.target.value });

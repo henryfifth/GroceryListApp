@@ -36,7 +36,7 @@ db.once('open', function () {
 
 app.use(bodyParser.json({ type: 'application/json' }));
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(expressSession({ secret: "lee is a fucking beast", cookie: { maxAge: 3600000 } }));
+app.use(expressSession({ secret: "lee is a fucking beast", cookie: { maxAge: 3600 } }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static('public'));
@@ -402,33 +402,22 @@ app.get('/user', (req, res, next) => {
 });
 
 app.put('/join', (req, res, next) => {
-    console.log("GOT HERE");
-    console.log(req.body)
-    console.log(req.user);
     House.findOne({ "houseName": req.body.joinHouse }, "password users", (err, house) => {
-        console.log("AND HERE");
-        console.log(house)
         if (err) {
             next(err);
         } else if (!house) {
-            console.log("DOWN");
             res.json({ message: "Something went wrong! Please try again." });
         } else if (house.password === req.body.password) {
-            console.log("GOT HERE TOO");
             User.findById(req.user._id, (err, foundUser) => {
-                console.log("ONCE AGAIN");
                 if (err) {
                 console.log(err)
                 res.json({ message: "User not found" })
                 } else {
-                    console.log("JUST ONE MORE");
                     foundUser.house = house._id;
                     foundUser.save((err, userReturned) => {
                         if (err) {
                         next(err);
                         } else {
-                            console.log("SUCCESS");
-                            console.log(userReturned);
                             res.json(userReturned);
                         }
                     });
